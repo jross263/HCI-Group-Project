@@ -1,0 +1,14 @@
+{
+  "name": "HCI-Group-Project",
+  "version": "1.0.0",
+  "main": "./src/main.js",
+  "repository": "https://github.com/jross263/HCI-Group-Project.git",
+  "author": "Jacob Ross",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^10.1.2"
+  },
+  "scripts": {
+    "start": "electron ."
+  }
+}
