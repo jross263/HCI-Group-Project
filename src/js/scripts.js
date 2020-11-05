@@ -1,19 +1,8 @@
-let cpuData = []
+api.send("cpu-info-subscribe",1000)
 
-setInterval(()=>{
-    fetch("http://localhost:8085/data.json").then((response) => {
-        return response.json();
-    }).then((data) => {
-        cpuData = data["Children"][0]["Children"][1]["Children"][1]["Children"]; //Disgusting
-        console.log(cpuData)
-    }).catch((err)=>{
-        console.error(err)
-    })
-},1000)
-
-let cpuIntervalID = setInterval(()=>{
+api.receive("cpu-info",(msg)=>{
     $("#entry").empty()
-    cpuData.forEach((element) => {
+    msg.forEach((element) => {
         $("#entry").append(
         `<tr>
             <th scope="row">${element.Text}</th>
@@ -22,4 +11,4 @@ let cpuIntervalID = setInterval(()=>{
             <td>${element.Max}</td>: 
         </tr`)
     });
-},)
+})
