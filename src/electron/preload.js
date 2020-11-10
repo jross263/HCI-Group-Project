@@ -2,15 +2,24 @@
 
 const { ipcRenderer, contextBridge } = require('electron');
 
+const HARDWARE_CATEGORIES = new Set(["cpu","gpu","hdd","bigng","mainboard","chip","ram"]);
+
 contextBridge.exposeInMainWorld("api",{
     send: (channel, ...data) =>{
-        const ALLOWED_CHANNELS = ["cpu-info-subscribe","cpu-info-unsubscribe"];
+        let ALLOWED_CHANNELS = [];
+        HARDWARE_CATEGORIES.forEach(category =>{
+            ALLOWED_CHANNELS.push(category+"-info-subscribe")
+            ALLOWED_CHANNELS.push(category+"-info-unsubscribe")
+        })
         if(ALLOWED_CHANNELS.includes(channel)){
             ipcRenderer.send(channel,...data);
         }
     },
     receive: (channel, cb) => {
-        const ALLOWED_CHANNELS = ["cpu-info"];
+        let ALLOWED_CHANNELS = [];
+        HARDWARE_CATEGORIES.forEach(category =>{
+            ALLOWED_CHANNELS.push(category+"-info")
+        })
         if(ALLOWED_CHANNELS.includes(channel)){
             ipcRenderer.on(channel, (event,...args) => cb(...args));
         }

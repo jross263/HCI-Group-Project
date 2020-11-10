@@ -1,10 +1,10 @@
-api.send("cpu-info-subscribe",1000)
+api.send("cpu-info-subscribe", 1000)
 
-api.receive("cpu-info",(msg)=>{
+api.receive("cpu-info", (msg) => {
     $("#entry").empty()
-    msg.forEach((element) => {
+    msg[0].temperature.forEach((element) => {
         $("#entry").append(
-        `<tr>
+            `<tr>
             <th scope="row">${element.Text}</th>
             <td>${element.Min}</td>
             <td>${element.Value}</td>

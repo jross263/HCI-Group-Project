@@ -2,10 +2,25 @@ const http = require('http');
 
 const Setup = (ipcMain,mainWindow) => {
 
-    let SYSTEM_DATA;
+    //These are the categories returned from OHM.
+    let SYSTEM_DATA = {
+        "cpu" : [],
+        "gpu" : [],
+        "hdd" : [],
+        "bigng" : [],
+        "mainboard" : [],
+        "chip" : [],
+        "ram" : []
+    }
 
+    //Dict of current subscriptions from the browser
     let subscriptions = {}
+
+    //Lookup set of hardware and sensor categories from OHM
+    const HARDWARE_CATEGORIES = new Set(["cpu","gpu","hdd","bigng","mainboard","chip","ram"]);
+    const SENSOR_TYPES = new Set(["voltage","clock","load","temperature","fan","flow","control","level","power"])
     
+    //Gets the data from OHM webserver
     const fetchData = () => {
         http.get("http://localhost:8085/data.json", (resp) => {
         let data = '';
@@ -15,9 +30,33 @@ const Setup = (ipcMain,mainWindow) => {
             data += chunk;
         });
 
-        // The whole response has been received. Print out the result.
+        // The whole response has been received.
         resp.on('end', () => {
-            SYSTEM_DATA = JSON.parse(data);
+            //Clear out the current system data
+            for(key in SYSTEM_DATA){
+                SYSTEM_DATA[key] = []
+            }
+            //This is to clean up the data, I could have rewrote the C# code for OHM but this was less work
+            let preProcessedData = JSON.parse(data);
+            //For every device, add it to the respective category
+            preProcessedData.Children[0].Children.forEach(device =>{
+                //For each hardware device, add its sensor properties as key in the JSON object
+                device.Children.forEach(sensorType =>{
+                    //in the case of the motherboard there is a hardware as a child so add its sensors as keys to it
+                    if(HARDWARE_CATEGORIES.has(sensorType.Category)){
+                        device[sensorType.Category] = sensorType
+                        device[sensorType.Category].Children.forEach(a=>{
+                            device[sensorType.Category][a.Category] = a.Children
+                        })
+                        delete device[sensorType.Category].Children
+                    }else{
+                        device[sensorType.Category] = sensorType.Children
+                    }
+                })
+                delete device.Children
+                SYSTEM_DATA[device.Category].push(device)
+            })
+            
         });
 
         }).on("error", (err) => {
@@ -28,23 +67,25 @@ const Setup = (ipcMain,mainWindow) => {
     fetchData()
     setInterval(fetchData,1000)
 
-    ipcMain.on("cpu-info-subscribe",(event,args)=>{
-        let cpuSubscription = setInterval(()=>{
-            if(SYSTEM_DATA){
-                response = SYSTEM_DATA["Children"][0]["Children"][1]["Children"][1]["Children"]
-                mainWindow.webContents.send("cpu-info",response);
+    HARDWARE_CATEGORIES.forEach(category => {
+        ipcMain.on(category + "-info-subscribe",(event,args)=>{
+            let subscription = setInterval(()=>{
+                if(SYSTEM_DATA[category].length){
+                    response = SYSTEM_DATA[category]
+                    mainWindow.webContents.send(category + "-info",response);
+                }
+            },args)
+            if(subscriptions[category]){
+                clearInterval(subscriptions[category])
             }
-        },args)
-        if(subscriptions.CPU){
-            clearInterval(subscriptions.CPU)
-        }
-        subscriptions.CPU = cpuSubscription        
-    })
-    
-    ipcMain.on("cpu-info-unsubscribe",(event,args)=>{
-        if(subscriptions.CPU){
-            clearInterval(subscriptions.CPU)
-        }
+            subscriptions[category] = subscription        
+        })
+
+        ipcMain.on(category + "-info-unsubscribe",(event,args)=>{
+            if(subscriptions[category]){
+                clearInterval(subscriptions[category])
+            }
+        })
     })
 }
 

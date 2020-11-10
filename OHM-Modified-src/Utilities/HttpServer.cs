@@ -206,14 +206,10 @@ namespace OpenHardwareMonitor.Utilities {
 
     private void SendJSON(HttpListenerResponse response) {
 
-      string JSON = "{\"id\": 0, \"Text\": \"Sensor\", \"Children\": [";
+      string JSON = "{\"Children\": [";
       nodeCount = 1;
       JSON += GenerateJSON(root);
       JSON += "]";
-      JSON += ", \"Min\": \"Min\"";
-      JSON += ", \"Value\": \"Value\"";
-      JSON += ", \"Max\": \"Max\"";
-      JSON += ", \"ImageURL\": \"\"";
       JSON += "}";
 
       var responseContent = JSON;
@@ -235,7 +231,7 @@ namespace OpenHardwareMonitor.Utilities {
     }
 
     private string GenerateJSON(Node n) {
-      string JSON = "{\"id\": " + nodeCount + ", \"Text\": \"" + n.Text 
+      string JSON = "{\"Text\": \"" + n.Text 
         + "\", \"Children\": [";
       nodeCount++;
 
@@ -249,24 +245,12 @@ namespace OpenHardwareMonitor.Utilities {
         JSON += ", \"Min\": \"" + ((SensorNode)n).Min + "\"";
         JSON += ", \"Value\": \"" + ((SensorNode)n).Value + "\"";
         JSON += ", \"Max\": \"" + ((SensorNode)n).Max + "\"";
-        JSON += ", \"ImageURL\": \"images/transparent.png\"";
       } else if (n is HardwareNode) {
-        JSON += ", \"Min\": \"\"";
-        JSON += ", \"Value\": \"\"";
-        JSON += ", \"Max\": \"\"";
-        JSON += ", \"ImageURL\": \"images_icon/" + 
+        JSON += ", \"Category\": \"" + 
           GetHardwareImageFile((HardwareNode)n) + "\"";
       } else if (n is TypeNode) {
-        JSON += ", \"Min\": \"\"";
-        JSON += ", \"Value\": \"\"";
-        JSON += ", \"Max\": \"\"";
-        JSON += ", \"ImageURL\": \"images_icon/" + 
+        JSON += ", \"Category\": \"" + 
           GetTypeImageFile((TypeNode)n) + "\"";
-      } else {
-        JSON += ", \"Min\": \"\"";
-        JSON += ", \"Value\": \"\"";
-        JSON += ", \"Max\": \"\"";
-        JSON += ", \"ImageURL\": \"images_icon/computer.png\"";
       }
 
       JSON += "}";
@@ -315,25 +299,25 @@ namespace OpenHardwareMonitor.Utilities {
 
       switch (hn.Hardware.HardwareType) {
         case HardwareType.CPU:
-          return "cpu.png";
+          return "cpu";
         case HardwareType.GpuNvidia:
-          return "nvidia.png";
+          return "gpu";
         case HardwareType.GpuAti:
-          return "ati.png";
+          return "gpu";
         case HardwareType.HDD:
-          return "hdd.png";
+          return "hdd";
         case HardwareType.Heatmaster:
-          return "bigng.png";
+          return "bigng";
         case HardwareType.Mainboard:
-          return "mainboard.png";
+          return "mainboard";
         case HardwareType.SuperIO:
-          return "chip.png";
+          return "chip";
         case HardwareType.TBalancer:
-          return "bigng.png";
+          return "bigng";
         case HardwareType.RAM:
-          return "ram.png";
+          return "ram";
         default:
-          return "cpu.png";
+          return "cpu";
       }
 
     }
@@ -342,25 +326,25 @@ namespace OpenHardwareMonitor.Utilities {
 
       switch (tn.SensorType) {
         case SensorType.Voltage:
-          return "voltage.png";
+          return "voltage";
         case SensorType.Clock:
-          return "clock.png";
+          return "clock";
         case SensorType.Load:
-          return "load.png";
+          return "load";
         case SensorType.Temperature:
-          return "temperature.png";
+          return "temperature";
         case SensorType.Fan:
-          return "fan.png";
+          return "fan";
         case SensorType.Flow:
-          return "flow.png";
+          return "flow";
         case SensorType.Control:
-          return "control.png";
+          return "control";
         case SensorType.Level:
-          return "level.png";
+          return "level";
         case SensorType.Power:
-          return "power.png";
+          return "power";
         default:
-          return "power.png";
+          return "power";
       }
 
     }
