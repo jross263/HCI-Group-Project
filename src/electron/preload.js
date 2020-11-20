@@ -6,7 +6,7 @@ const HARDWARE_CATEGORIES = new Set(["cpu","gpu","hdd","bigng","mainboard","chip
 
 contextBridge.exposeInMainWorld("api",{
     send: (channel, ...data) =>{
-        let ALLOWED_CHANNELS = [];
+        let ALLOWED_CHANNELS = ["fetch-all-devices"];
         HARDWARE_CATEGORIES.forEach(category =>{
             ALLOWED_CHANNELS.push(category+"-info-subscribe")
             ALLOWED_CHANNELS.push(category+"-info-unsubscribe")
@@ -16,7 +16,7 @@ contextBridge.exposeInMainWorld("api",{
         }
     },
     receive: (channel, cb) => {
-        let ALLOWED_CHANNELS = [];
+        let ALLOWED_CHANNELS = ["all-devices"];
         HARDWARE_CATEGORIES.forEach(category =>{
             ALLOWED_CHANNELS.push(category+"-info")
         })

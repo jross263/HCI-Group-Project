@@ -20,15 +20,15 @@ function createWindow () {
         }
     })
     if(process.env.DEV){
-        fs.watch(path.join(__dirname, '../html'),()=>{
+        fs.watch(path.join(__dirname, '../site/html'),()=>{
             mainWindow.reload()
         })
-        fs.watch(path.join(__dirname, '../js'),()=>{
+        fs.watch(path.join(__dirname, '../site/js'),()=>{
             mainWindow.reload()
         })
         mainWindow.webContents.openDevTools()
     }
-    mainWindow.loadFile(path.join(__dirname,"..","html", "index.html"))
+    mainWindow.loadFile(path.join(__dirname,"..","site","html", "index.html"))
     SystemData.Setup(ipcMain,mainWindow);    
 }
 
@@ -44,7 +44,11 @@ app.whenReady().then(() => {
     const OpenHardwareMonitor = spawn(path.join(pathName,"OHM-Modified/OpenHardwareMonitor.exe"));
     //when OHM outputs to std out create browser window
     OpenHardwareMonitor.stdout.on('data', () => {
-        createWindow()
+        SystemData.WaitForWebserver().then((status)=>{
+            if(status === "ready"){
+                createWindow()
+            }
+        })
     });
     
     app.on('activate', function () {

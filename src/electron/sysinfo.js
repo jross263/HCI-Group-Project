@@ -1,4 +1,5 @@
 const http = require('http');
+const { resolve } = require('path');
 
 const Setup = (ipcMain,mainWindow) => {
 
@@ -69,6 +70,10 @@ const Setup = (ipcMain,mainWindow) => {
 
     HARDWARE_CATEGORIES.forEach(category => {
         ipcMain.on(category + "-info-subscribe",(event,args)=>{
+            if(SYSTEM_DATA[category].length){
+                response = SYSTEM_DATA[category]
+                mainWindow.webContents.send(category + "-info",response);
+            }
             let subscription = setInterval(()=>{
                 if(SYSTEM_DATA[category].length){
                     response = SYSTEM_DATA[category]
@@ -87,6 +92,31 @@ const Setup = (ipcMain,mainWindow) => {
             }
         })
     })
+
+    ipcMain.on("fetch-all-devices",(event,args)=>{
+        mainWindow.webContents.send("all-devices",SYSTEM_DATA);
+    })
 }
 
+const WaitForWebserver = () => {
+    return new Promise((resolve,reject)=>{
+        http.get("http://localhost:8085/data.json", (resp) => {
+            let data = '';
+    
+            // A chunk of data has been recieved.
+            resp.on('data', (chunk) => {
+                data += chunk;
+            });
+    
+            // The whole response has been received.
+            resp.on('end', () => {
+                resolve("ready")
+            });
+    
+            }).on("error", (err) => {
+                reject("err")
+            });
+    })
+}
 exports.Setup = Setup;
+exports.WaitForWebserver = WaitForWebserver;
