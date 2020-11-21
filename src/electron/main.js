@@ -28,8 +28,19 @@ function createWindow () {
         })
         mainWindow.webContents.openDevTools()
     }
-    mainWindow.loadFile(path.join(__dirname,"..","site","html", "index.html"))
-    SystemData.Setup(ipcMain,mainWindow);    
+    function wait(){
+        SystemData.WaitForWebserver().then((status)=>{
+            if(status === "ready"){
+                mainWindow.loadFile(path.join(__dirname,"..","site","html", "index.html"))
+                SystemData.Setup(ipcMain,mainWindow);
+            }
+        }).catch(()=>{
+            console.log("ASDD")
+            wait()
+        })
+    }
+    wait()
+    mainWindow.loadFile(path.join(__dirname,"..","site","html", "loading.html"))
 }
 
 // This method will be called when Electron has finished
@@ -44,11 +55,7 @@ app.whenReady().then(() => {
     const OpenHardwareMonitor = spawn(path.join(pathName,"OHM-Modified/OpenHardwareMonitor.exe"));
     //when OHM outputs to std out create browser window
     OpenHardwareMonitor.stdout.on('data', () => {
-        SystemData.WaitForWebserver().then((status)=>{
-            if(status === "ready"){
-                createWindow()
-            }
-        })
+        createWindow()
     });
     
     app.on('activate', function () {
