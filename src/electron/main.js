@@ -35,7 +35,6 @@ function createWindow () {
                 SystemData.Setup(ipcMain,mainWindow);
             }
         }).catch(()=>{
-            console.log("ASDD")
             wait()
         })
     }
