@@ -22,5 +22,8 @@
         "extraResources": [
             "./OHM-Modified/*"
         ]
+    },
+    "dependencies": {
+        "electron-store": "^6.0.1"
     }
 }
