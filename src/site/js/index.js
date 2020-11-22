@@ -7,7 +7,7 @@ $(function(){
                 newURL.pop()
                 newURL.push("deviceTemplate.html?group="+deviceGroup)
                 newURL = newURL.join("/")
-                $("#device-entry").append(`<a type="button" href="${newURL}" class="btn btn-primary" id="${deviceGroup}-btn">${deviceGroup}</button>`)
+                $("#device-entry").append(`<a type="button" href="${newURL}" class="btn btn-primary" id="${deviceGroup}-btn">${deviceGroup}</a>`)
             }
         });
     })
