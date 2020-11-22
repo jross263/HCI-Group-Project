@@ -10260,4 +10260,17 @@ a.text-dark:hover, a.text-dark:focus {
     border-color: #dee2e6;
   }
 }
+
+.centerDiv {
+  margin: auto;
+}
+
+.homeTabBar
+{
+    text-align:center;
+}
+.homeLeftTabBar, .homeRightTabBar
+{
+    display:inline;
+}
 /*# sourceMappingURL=bootstrap.css.map */
