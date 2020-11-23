@@ -1,6 +1,16 @@
 const http = require('http');
 const { resolve } = require('path');
 
+let SYSTEM_DATA = {
+    "cpu" : [],
+    "gpu" : [],
+    "hdd" : [],
+    "bigng" : [],
+    "mainboard" : [],
+    "chip" : [],
+    "ram" : []
+}
+
 const Setup = (ipcMain,mainWindow) => {
 
     //These are the categories returned from OHM.
@@ -117,6 +127,9 @@ const WaitForWebserver = () => {
                 reject("err")
             });
     })
+}
+
+const getSystemDataBackend = () => {
 }
 exports.Setup = Setup;
 exports.WaitForWebserver = WaitForWebserver;

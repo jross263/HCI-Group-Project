@@ -1,6 +1,7 @@
 $(function(){
-    api.send("fetch-all-devices", 1000)
+    api.send("fetch-all-devices")
     api.receive("all-devices",(devices)=>{
+        console.log(devices)
         Object.keys(devices).forEach(deviceGroup => {
             if(devices[deviceGroup].length){
                 let newURL = window.location.href.split("/")
