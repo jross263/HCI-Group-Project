@@ -4,6 +4,7 @@ const path = require('path');
 const spawn = require('child_process').spawn;
 const fs = require('fs')
 const SystemData = require('./sysinfo');
+const exportToExcel = require('./excel').exportToExcel
 
 function createWindow () {
     // Create the browser window.
@@ -39,10 +40,12 @@ function createWindow () {
                 const exportToCSVClick = (menuItem, browserWindow, event) => {
                     dialog.showSaveDialog({ 
                         filters: [
-                            { name: 'Comma-separated values', extensions: ['xlsx'] }
+                            { name: 'Excel workbook', extensions: ['xlsx'] }
                           ] 
                     }).then((file)=>{
-                        console.log(file)
+                        if(!file.canceled){
+                            exportToExcel(SystemData.getSystemDataBackend(),file)
+                        }
                     })
                 }
                 
@@ -51,7 +54,7 @@ function createWindow () {
                         label: "File",
                         submenu: [
                             {
-                                label : "Export to Excel",
+                                label : "Export All Devices to Excel",
                                 click : exportToCSVClick
                             },
                             {

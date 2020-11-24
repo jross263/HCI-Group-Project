@@ -19,7 +19,7 @@ $(function() {
     var myCanvas = document.getElementById("myGauge");
     var a = new Gauge({
         canvas : myCanvas,
-        width_height : 500,
+        width_height : 300,
         font : "30px Arial",
         centerText : "Utilization:",
         metricSymbol : "%"
