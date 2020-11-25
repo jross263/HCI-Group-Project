@@ -5,6 +5,12 @@ const spawn = require('child_process').spawn;
 const fs = require('fs')
 const SystemData = require('./sysinfo');
 
+//Database setup
+const db = require('./db/stores/hardware');
+global.db = db;
+
+//END database setup
+
 function createWindow () {
     // Create the browser window.
     const mainWindow = new BrowserWindow({
@@ -12,8 +18,8 @@ function createWindow () {
         height: 600,
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),
-            nodeIntegration: false,
-            enableRemoteModule: false,
+            nodeIntegration: true,
+            enableRemoteModule: true,
             contextIsolation: true,
             worldSafeExecuteJavaScript: true,
             sandbox: true,
@@ -74,3 +80,4 @@ app.on('window-all-closed', function () {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+

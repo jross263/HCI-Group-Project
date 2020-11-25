@@ -24,6 +24,8 @@
         ]
     },
     "dependencies": {
-        "electron-store": "^6.0.1"
+        "ajv": "^6.12.6",
+        "electron-store": "^6.0.1",
+        "nedb-promises": "^4.1.0"
     }
 }

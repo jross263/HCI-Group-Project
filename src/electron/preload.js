@@ -1,6 +1,7 @@
 //https://medium.com/@gracespletzer/disabling-node-integration-for-electron-applications-8b45f0fa0fd9
 
-const { ipcRenderer, contextBridge } = require('electron');
+const { ipcRenderer, contextBridge} = require('electron');
+const dbInstance = remote.getGlobal('db');
 
 const HARDWARE_CATEGORIES = new Set(["cpu","gpu","hdd","bigng","mainboard","chip","ram"]);
 
