@@ -4,12 +4,8 @@ const path = require('path');
 const spawn = require('child_process').spawn;
 const fs = require('fs')
 const SystemData = require('./sysinfo');
+const DB = require("./dbsetup")
 
-//Database setup
-const db = require('./db/stores/hardware');
-global.db = db;
-
-//END database setup
 
 function createWindow () {
     // Create the browser window.
@@ -34,6 +30,7 @@ function createWindow () {
         })
         mainWindow.webContents.openDevTools()
     }
+    DB.Setup(ipcMain,mainWindow)
     function wait(){
         SystemData.WaitForWebserver().then((status)=>{
             if(status === "ready"){
