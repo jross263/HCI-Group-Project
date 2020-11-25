@@ -15,7 +15,7 @@ $(function() {
     if(!STRESS_TESTABLE.includes(group)){
         $("#stress-test-tab").parent().hide()
     }
-
+    
 
     api.send(`${group}-info-subscribe`, 1000)
     

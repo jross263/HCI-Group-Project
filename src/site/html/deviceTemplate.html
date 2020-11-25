@@ -8,7 +8,8 @@
         <link rel="stylesheet" href="../css/external/bootstrap/bootstrap.min.css" />
         <script src="../js/external/popper.js/popper.min.js"></script>
         <script src="../js/external/bootstrap/bootstrap.min.js"></script>
-        <script src="../js/device.js"></script>        
+        <script src="../js/device.js"></script>   
+             
     </head>
 
     <body>
@@ -28,15 +29,32 @@
             <div class="tab-pane fade show active" id="device-info" role="tabpanel" aria-labelledby="device-info-tab"></div>
             <div class="tab-pane fade" id="stress-test" role="tabpanel" aria-labelledby="stress-test-tab"></div>
             <div class="tab-pane fade" id="reports" role="tabpanel" aria-labelledby="reports-tab">
-              <form id="AddContraint">
-                <input hidden type="string" id="hardware" name="hardware">
-                <input type="number" id="value" name="value">
-                <input type="string" id="contraintType" name="contraintType">
-                <input type="submit" value="Add Contraint">
-              </form>
+            <div class="container">  
+              <div class="row">
+                <div class="col">
+                  Constraint Number
+                </div>
+                <div class="col">
+                  Constraint Type
+                </div>
+              </div>
+              <div class="container Constraints">
+                
+              </div>
+              </div>
+              <div class="container">
+                <div class="row">
+                  <div class="col">
+                    <form id="AddContraint" onsubmit="return flase;">              
+                      <input type="string" id="contraintType" name="contraintType">
+                      <button type="button" class="btn btn-primary">Add Constraint</button>
+                    </form>
+                </div>
+              </div>
+            </div>
 
             </div>
-          </div>         
-          <script src='../js/electron/renderer.js'></script>
+          </div>  
+        <script src='../js/db.js'></script>               
     </body>
 </html>
