@@ -1,3 +1,12 @@
 .ReportsSection{
     margin:30px;
 }
+.Constraint-Col{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.Constraint-Row{
+    padding: 5px 0;
+}

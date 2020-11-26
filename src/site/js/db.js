@@ -33,7 +33,7 @@ $(function() {
 
     api.receive("receive-db",(info)=>{     
         info.forEach(function(item,index){
-            var htmlSetup = `<div class="row"><div class="col">${index}</div><div class="col">${item.Hardware} ${item.ConstraintType} ${item.Operator} ${item.TestValue} <button type="button" class="btn btn-danger DeleteConstraint" data-id="${item._id}">Delete</button></div></div>`            
+            var htmlSetup = `<div class="row Constraint-Row"><div class="col">${index}</div><div class="col Constraint-Col">${item.Hardware} ${item.ConstraintType} ${item.Operator} ${item.TestValue} <button type="button" class="btn btn-danger DeleteConstraint" data-id="${item._id}">Delete</button></div><div class="col">PUT DROP DOWN OF ALL REPORTS HERE</div></div>`            
             $(".Constraints").append(htmlSetup)
         });
 
