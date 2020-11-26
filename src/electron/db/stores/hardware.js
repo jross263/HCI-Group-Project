@@ -31,16 +31,8 @@ class HardwareStore {
         return this.db.findOne({_id}).exec()
     }
 
-    readAll() {
-        return this.db.find()
-    }
-
-    readActive() {
-        return this.db.find({isDone: false}).exec();
-    }
-
-    archive({_id}) {
-        return this.db.update({_id}, {$set: {isDone: true}})
-    }
+    readAll(query) {
+        return this.db.find(query)
+    }  
 }
 module.exports = new HardwareStore();

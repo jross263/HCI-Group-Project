@@ -1,15 +1,26 @@
 $(function() {
+    const params = new URLSearchParams(window.location.search)
+    const group = params.get("group")
+
     function displayConstraints(){
         $(".Constraints").empty()    
-        api.send('db-get')                     
+        api.send('db-get',{Hardware: group}) 
     }
 
-    function AddConstraint() {
+    function CreateConstraintObject(objectArray){
+        var JsonObj = {}
+        objectArray.forEach(function(item){
+            JsonObj[item.name] = item.value         
+        });        
+        return JsonObj
+    }
+
+    function AddConstraint() {        
         var data = $('#AddContraint').serializeArray();
-        console.log(data[0].value)
-        api.send('db-create', {name: data[0].value})
-        console.log("added constraint")  
-        displayConstraints()
+        data[0].value = group
+        var Json = CreateConstraintObject(data)
+        api.send('db-create', Json)
+        displayConstraints()      
         return        
     }  
 
@@ -18,10 +29,9 @@ $(function() {
         $("#AddContraint button").on( "click", AddConstraint )
     });         
 
-    api.receive("receive-db",(info)=>{
-        console.log(info)
+    api.receive("receive-db",(info)=>{     
         info.forEach(function(item,index){
-            var htmlSetup = `<div class="row"><div class="col">Item: ${index}</div><div class="col">${item.name}</div></div>`            
+            var htmlSetup = `<div class="row"><div class="col">${index}</div><div class="col">${item.Hardware} ${item.ConstraintType} ${item.Operator} ${item.TestValue}</div></div>`            
             $(".Constraints").append(htmlSetup)
         });        
     })  

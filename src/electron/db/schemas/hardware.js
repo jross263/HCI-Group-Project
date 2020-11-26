@@ -1,8 +1,17 @@
 const hardwareSchema = {
     type: 'object',
     properties: {
-      name: {
+      Hardware: {
         type: 'string',
+      },
+      ConstraintType:{
+        type:'string'
+      },
+      TestValue:{
+        type:'string'
+      },
+      Operator:{
+        type:'string'
       }
     },
   };
