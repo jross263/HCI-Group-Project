@@ -4,7 +4,7 @@ const path = require('path');
 const spawn = require('child_process').spawn;
 const fs = require('fs')
 const SystemData = require('./sysinfo');
-
+const cpuStressTest = require("./cpuStressTest")
 function createWindow () {
     // Create the browser window.
     const mainWindow = new BrowserWindow({
@@ -28,6 +28,7 @@ function createWindow () {
         })
         mainWindow.webContents.openDevTools()
     }
+    cpuStressTest.cpuStressTestSetup(ipcMain,mainWindow)
     function wait(){
         SystemData.WaitForWebserver().then((status)=>{
             if(status === "ready"){
@@ -35,7 +36,7 @@ function createWindow () {
                 SystemData.Setup(ipcMain,mainWindow);
             }
         }).catch(()=>{
-            console.log("CAUGHT")
+
             wait()
         })
     }
