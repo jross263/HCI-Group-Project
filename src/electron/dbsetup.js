@@ -5,6 +5,10 @@ const Setup = (ipcMain,mainWindow) => {
         db.create(args)
     })
 
+    ipcMain.on("db-delete",(event,args)=>{
+        db.delete(args)
+    })
+
     ipcMain.on("db-get",(event,args)=>{        
         db.readAll(args).then(allTodolists => {
             mainWindow.webContents.send("receive-db",allTodolists);

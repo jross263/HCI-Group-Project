@@ -26,7 +26,9 @@ class HardwareStore {
             return this.db.insert(data);
         }
     }
-
+    delete(id){
+        return this.db.remove({_id: id})
+    }
     read(_id) {
         return this.db.findOne({_id}).exec()
     }
