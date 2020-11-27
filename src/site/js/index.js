@@ -10,6 +10,6 @@ $(function(){
                 $("#device-entry").append(`<a type="button" href="${newURL}" class="btn btn-primary" id="${deviceGroup}-btn">${deviceGroup}</button>`)
             }
         });
-    })
+    })    
 });
 

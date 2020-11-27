@@ -1,16 +1,16 @@
 const Datastore = require('nedb-promises');
 const Ajv = require('ajv');
-const hardwareSchema = require('../schemas/hardware');
+const reportSchema = require('../schemas/reports');
 
-class HardwareStore {
+class ReportStore {
     constructor() {
         const ajv = new Ajv({
             allErrors: true,
             useDefaults: true
         });
         
-        this.schemaValidator = ajv.compile(hardwareSchema);
-        const dbPath = `${process.cwd()}/HWMonitor.db`;
+        this.schemaValidator = ajv.compile(reportSchema);
+        const dbPath = `${process.cwd()}/HWMonitorReports.db`;
         this.db = Datastore.create({
             filename: dbPath,
             timestampData: true,
@@ -34,9 +34,9 @@ class HardwareStore {
     }
     readAll() {
         return this.db.find()
-    }
+    } 
     readAll(query) {
         return this.db.find(query)
     }  
 }
-module.exports = new HardwareStore();
+module.exports = new ReportStore();

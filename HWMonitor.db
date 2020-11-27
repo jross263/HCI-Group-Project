@@ -1,7 +1,6 @@
 {"Hardware":"mainboard","ConstraintType":"load","Operator":">","TestValue":"8","_id":"CH3SgS8uWkWi4wOQ","createdAt":{"$$date":1606424500250},"updatedAt":{"$$date":1606424500250}}
-{"Hardware":"cpu","ConstraintType":"load","Operator":">","TestValue":"88","_id":"IX9h4582tX2r2608","createdAt":{"$$date":1606424988144},"updatedAt":{"$$date":1606424988144}}
 {"Hardware":"cpu","ConstraintType":"load","Operator":">","TestValue":"9","_id":"N8j1QEAwEzJiZAny","createdAt":{"$$date":1606424488342},"updatedAt":{"$$date":1606424488342}}
 {"Hardware":"hdd","ConstraintType":"load","Operator":">","TestValue":"77","_id":"fJQZScthGm4TeZjK","createdAt":{"$$date":1606424406089},"updatedAt":{"$$date":1606424406089}}
-{"Hardware":"ram","ConstraintType":"load","Operator":">","TestValue":"77","_id":"ng7L20WK8HdL4PiH","createdAt":{"$$date":1606420993784},"updatedAt":{"$$date":1606420993784}}
 {"Hardware":"cpu","ConstraintType":"load","Operator":">","TestValue":"66","_id":"l5CWF4pfzARd7vTQ","createdAt":{"$$date":1606425202482},"updatedAt":{"$$date":1606425202482}}
-{"$$deleted":true,"_id":"IX9h4582tX2r2608"}
+{"Hardware":"ram","ConstraintType":"load","Operator":">","TestValue":"77","_id":"ng7L20WK8HdL4PiH","createdAt":{"$$date":1606420993784},"updatedAt":{"$$date":1606420993784}}
+{"Hardware":"cpu","ConstraintType":"load","Operator":">","TestValue":"7","_id":"runZIZmKKnjqPOqb","createdAt":{"$$date":1606434169102},"updatedAt":{"$$date":1606434169102}}
