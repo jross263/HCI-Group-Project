@@ -12,6 +12,9 @@ const hardwareSchema = {
       },
       Operator:{
         type:'string'
+      },
+      Reports:{
+        type:'array'
       }
     },
   };

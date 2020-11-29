@@ -12,6 +12,7 @@ $(function() {
         objectArray.forEach(function(item){
             JsonObj[item.name] = item.value         
         });        
+        JsonObj["Reports"] = ["Report 1","Report 2"]
         return JsonObj
     }
 
@@ -33,8 +34,24 @@ $(function() {
 
     api.receive("receive-db",(info)=>{     
         info.forEach(function(item,index){
-            var htmlSetup = `<div class="row Constraint-Row"><div class="col">${index}</div><div class="col Constraint-Col">${item.Hardware} ${item.ConstraintType} ${item.Operator} ${item.TestValue} <button type="button" class="btn btn-danger DeleteConstraint" data-id="${item._id}">Delete</button></div><div class="col">PUT DROP DOWN OF ALL REPORTS HERE</div></div>`            
-            $(".Constraints").append(htmlSetup)
+            var htmlStart = `<div class="row Constraint-Row">`
+            var htmlMiddle = 
+            `<div class="col">${index}</div>
+            <div class="col Constraint-Col">${item.Hardware} ${item.ConstraintType} ${item.Operator} ${item.TestValue} <button type="button" class="btn btn-danger DeleteConstraint" data-id="${item._id}">Delete</button></div>
+            <div class="col">`
+            var htmlreportsStart = 
+            `<div class="form-group">        
+             <select class="form-control ReportsSelect" >`            
+            item.Reports.forEach(function(thing,ind){
+                htmlreportsStart += `<option>${thing}</option>`
+            });            
+            htmlreportsStart += `</select></div>`
+
+            htmlStart += htmlMiddle 
+            htmlStart += htmlreportsStart 
+            var htmlEnd = `</div></div></div>`
+            htmlStart += htmlEnd                        
+            $(".Constraints").append(htmlStart)
         });
 
         $(".DeleteConstraint").on("click", function(){

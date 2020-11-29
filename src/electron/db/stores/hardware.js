@@ -32,6 +32,9 @@ class HardwareStore {
     read(_id) {
         return this.db.findOne({_id}).exec()
     }
+    update(updateArray){
+        return this.db.update({ _id: updateArray[0] },updateArray[1])
+    }
     readAll() {
         return this.db.find()
     }

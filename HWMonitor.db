@@ -1,6 +1,8 @@
-{"Hardware":"mainboard","ConstraintType":"load","Operator":">","TestValue":"8","_id":"CH3SgS8uWkWi4wOQ","createdAt":{"$$date":1606424500250},"updatedAt":{"$$date":1606424500250}}
-{"Hardware":"cpu","ConstraintType":"load","Operator":">","TestValue":"9","_id":"N8j1QEAwEzJiZAny","createdAt":{"$$date":1606424488342},"updatedAt":{"$$date":1606424488342}}
-{"Hardware":"hdd","ConstraintType":"load","Operator":">","TestValue":"77","_id":"fJQZScthGm4TeZjK","createdAt":{"$$date":1606424406089},"updatedAt":{"$$date":1606424406089}}
-{"Hardware":"cpu","ConstraintType":"load","Operator":">","TestValue":"66","_id":"l5CWF4pfzARd7vTQ","createdAt":{"$$date":1606425202482},"updatedAt":{"$$date":1606425202482}}
-{"Hardware":"ram","ConstraintType":"load","Operator":">","TestValue":"77","_id":"ng7L20WK8HdL4PiH","createdAt":{"$$date":1606420993784},"updatedAt":{"$$date":1606420993784}}
-{"Hardware":"cpu","ConstraintType":"load","Operator":">","TestValue":"7","_id":"runZIZmKKnjqPOqb","createdAt":{"$$date":1606434169102},"updatedAt":{"$$date":1606434169102}}
+{"Hardware":"cpu","ConstraintType":"load","Operator":">","TestValue":"22","Reports":["Report 1","Report 2"],"_id":"uCBC1lsp89yKJAmC","createdAt":{"$$date":1606690137878},"updatedAt":{"$$date":1606690137878}}
+{"Hardware":"cpu","ConstraintType":"temp","Operator":"Equals =","TestValue":"99","Reports":["Report 1","Report 2"],"_id":"wwFE9Gf5f9sBHgtF","createdAt":{"$$date":1606690884554},"updatedAt":{"$$date":1606690884554}}
+{"$$deleted":true,"_id":"uCBC1lsp89yKJAmC"}
+{"Hardware":"mainboard","ConstraintType":"load","Operator":">","TestValue":"3","Reports":["Report 1","Report 2"],"_id":"dEn8M78KgPT4PgVm","createdAt":{"$$date":1606691025925},"updatedAt":{"$$date":1606691025925}}
+{"Hardware":"mainboard","ConstraintType":"temp","Operator":"<","TestValue":"0","Reports":["Report 1","Report 2"],"_id":"6ckq6A3oxCgTQfnT","createdAt":{"$$date":1606691035606},"updatedAt":{"$$date":1606691035606}}
+{"$$deleted":true,"_id":"6ckq6A3oxCgTQfnT"}
+{"$$deleted":true,"_id":"wwFE9Gf5f9sBHgtF"}
+{"Hardware":"cpu","ConstraintType":"load","Operator":">","TestValue":"88","Reports":["Report 1","Report 2"],"_id":"rKC5gREL9E3AdOoh","createdAt":{"$$date":1606691050480},"updatedAt":{"$$date":1606691050480}}

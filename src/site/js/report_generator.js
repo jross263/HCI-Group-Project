@@ -2,7 +2,7 @@ $(function() {
     const params = new URLSearchParams(window.location.search)
     const group = params.get("group")   
   
-    //Create, Delete and Get Reports works.
+    //report object
     // var Json = {ConstraintID: 'string',
     //   CpuInfo:'string2',
     //   GpuInfo:'string3',
@@ -12,18 +12,15 @@ $(function() {
     //   MainBoard:'string',      
     //   Chip:'string'
     // }
-    // api.send('create-report', Json)
-    // api.send('get-reports', Json)
-    // api.receive("receive-reports",(info)=>{     
-    //     info.forEach(function(item){
-    //         console.log(item)
-    //     });
-    // });
-    //
+
     setInterval(function(){
         api.send('db-get')
         // Send call to  get all hardware data
     }, 10000);
+
+    //how to update a record
+    // var updateArray = ["InksmJ5GJrVGs39T", { $set: { Operator: "=" } } ]
+    // api.send('db-update',updateArray)
     
     api.receive('receive-db',(info)=>{     
         info.forEach(function(item){
