@@ -16,14 +16,16 @@ $(function() {
         $("#stress-test-tab").parent().hide()
     }
 
-    var myCanvas = document.getElementById("myGauge");
-    var a = new Gauge({
-        canvas : myCanvas,
-        width_height : 300,
-        font : "30px Arial",
-        centerText : "Utilization:",
-        metricSymbol : "%"
-    }) 
+    // EXAMPLE
+    
+    // var myCanvas = document.getElementById("myGauge");
+    // var a = new Gauge({
+    //     canvas : myCanvas,
+    //     width_height : 300,
+    //     font : "30px Arial",
+    //     centerText : "Utilization:",
+    //     metricSymbol : "%"
+    // }) 
 
     api.send(`${group}-info-subscribe`, 1000)
     
