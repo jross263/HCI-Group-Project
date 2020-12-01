@@ -10,13 +10,36 @@
         <script src="../js/external/bootstrap/bootstrap.min.js"></script>
         <script src="../js/gauge.js"></script>
         <script src="../js/device.js"></script>
+        <style>
+  
+        .button2 {
+          margin: 0;
+          position: absolute;
+          top: 80%;
+          left: 50%;
+          margin-right: -50%;
+          transform: translate(-50%, -50%);
+          background-color: #4CAF50;
+          justify-content: center;
+          align-items: center;
+          border-radius: 15px;
+          border: none;
+          color: white;
+          padding: 16px 32px;
+          font-size: 16px;
+
+          text-align: center;
+        }
+        .button2:hover {background-color: #3e8e41}
+
+        </style>
     </head>
 
     <body>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <button type="button" id="back-btn" class="btn btn-primary">Back</button>
             <li class="nav-item" role="presentation">
-              <a class="nav-link active" id="device-info-tab" data-toggle="tab" href="#device-info" role="tab" aria-controls="device-info" aria-selected="true">Device Info</a>
+              <a class="nav-link active" id="device-info-tab" data-toggle="tab" href="#device-info" role="tab" aria-controls="device-info"  aria-selected="true">Device Info</a>
             </li>
             <li class="nav-item" role="presentation">
               <a class="nav-link" id="stress-test-tab" data-toggle="tab" href="#stress-test" role="tab" aria-controls="stress-test" aria-selected="false">Stress Test</a>
@@ -29,10 +52,15 @@
             <div class="tab-pane fade show active" id="device-info" role="tabpanel" aria-labelledby="device-info-tab">
               <div id="device-stats"></div>
               <canvas id="myGauge"></canvas>
+              
             </div>
-            <div class="tab-pane fade" id="stress-test" role="tabpanel" aria-labelledby="stress-test-tab"></div>
+            <div class="tab-pane fade" id="stress-test" role="tabpanel" aria-labelledby="stress-test-tab">
+              <button class="button2" id="myButton2">Start</button> 
+            </div>
             <div class="tab-pane fade" id="reports" role="tabpanel" aria-labelledby="reports-tab"></div>
           </div>
+
+          
     </body>
 
 </html>

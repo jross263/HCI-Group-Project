@@ -4,6 +4,7 @@ const path = require('path');
 const spawn = require('child_process').spawn;
 const fs = require('fs')
 const SystemData = require('./sysinfo');
+const cpuStressTest = require("./cpuStressTest")
 const exportToExcel = require('./excel').exportToExcel
 
 function createWindow () {
@@ -29,6 +30,7 @@ function createWindow () {
         })
         mainWindow.webContents.openDevTools()
     }
+    cpuStressTest.cpuStressTestSetup(ipcMain,mainWindow)
     const customMenu = new Menu()
     Menu.setApplicationMenu(customMenu)
 
