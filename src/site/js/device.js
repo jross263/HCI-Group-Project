@@ -46,10 +46,30 @@ $(function() {
         metricSymbol : "%"
     }) 
 
+    var myCanvas2 = document.getElementById("myGauge2");
+    var b = new Gauge({
+        canvas : myCanvas2,
+        width_height : 200,
+        font : "15px Arial",
+        centerText : "Utilization:",
+        metricSymbol : "%"
+    })
+    
+    var myCanvas3 = document.getElementById("myGauge3");
+    var c = new Gauge({
+        canvas : myCanvas3,
+        width_height : 200,
+        font : "15px Arial",
+        centerText : "Temperature",
+        metricSymbol : " C"
+    }) 
+
     api.send(`${group}-info-subscribe`, 1000)
     
     api.receive(`${group}-info`,(info)=>{
         a.draw(info[0].load[0].Value.split(" ")[0])
+        b.draw(info[0].load[0].Value.split(" ")[0])
+        c.draw(info[0].temperature[2].Value.split(" ")[0])
         $("#device-stats").empty()
         $("#device-stats").append(`Device : ${info[0].Text}<br>`)
     })
