@@ -1,10 +1,12 @@
 // Modules to control application life and create native browser window
-const {app, BrowserWindow, ipcMain} = require('electron');
+const {app, BrowserWindow, ipcMain, Menu, dialog} = require('electron');
 const path = require('path');
 const spawn = require('child_process').spawn;
 const fs = require('fs')
 const SystemData = require('./sysinfo');
 const cpuStressTest = require("./cpuStressTest")
+const exportToExcel = require('./excel').exportToExcel
+
 function createWindow () {
     // Create the browser window.
     const mainWindow = new BrowserWindow({
@@ -29,14 +31,49 @@ function createWindow () {
         mainWindow.webContents.openDevTools()
     }
     cpuStressTest.cpuStressTestSetup(ipcMain,mainWindow)
+    const customMenu = new Menu()
+    Menu.setApplicationMenu(customMenu)
+
     function wait(){
         SystemData.WaitForWebserver().then((status)=>{
+            console.log(status)
             if(status === "ready"){
+
+                const exportToCSVClick = (menuItem, browserWindow, event) => {
+                    dialog.showSaveDialog({ 
+                        filters: [
+                            { name: 'Excel workbook', extensions: ['xlsx'] }
+                          ] 
+                    }).then((file)=>{
+                        if(!file.canceled){
+                            exportToExcel(SystemData.getSystemDataBackend(),file)
+                        }
+                    })
+                }
+                
+                const menuTemplate = [
+                    {
+                        label: "File",
+                        submenu: [
+                            {
+                                label : "Export All Devices to Excel",
+                                click : exportToCSVClick
+                            },
+                            {
+                                role: "close"
+                            }
+                        ]
+                    },
+                ];
+                
+                const customMenu = Menu.buildFromTemplate(menuTemplate)
+                Menu.setApplicationMenu(customMenu)
+                
                 mainWindow.loadFile(path.join(__dirname,"..","site","html", "index.html"))
                 SystemData.Setup(ipcMain,mainWindow);
             }
-        }).catch(()=>{
-
+        }).catch((err)=>{
+            console.log(err)
             wait()
         })
     }

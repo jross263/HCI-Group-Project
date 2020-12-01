@@ -35,13 +35,23 @@ $(function() {
         });
     });
 
+    // EXAMPLE
+    
+    var myCanvas = document.getElementById("myGauge");
+    var a = new Gauge({
+        canvas : myCanvas,
+        width_height : 300,
+        font : "30px Arial",
+        centerText : "Utilization:",
+        metricSymbol : "%"
+    }) 
+
     api.send(`${group}-info-subscribe`, 1000)
     
     api.receive(`${group}-info`,(info)=>{
-        console.log(info)
-        $("#device-info").empty()
-        $("#device-info").append(`<b>Device : ${info[0].Text}<br> <b>`)
+        a.draw(info[0].load[0].Value.split(" ")[0])
+        $("#device-stats").empty()
+        $("#device-stats").append(`Device : ${info[0].Text}<br>`)
     })
-
 });
 

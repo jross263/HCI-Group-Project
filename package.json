@@ -22,5 +22,8 @@
         "extraResources": [
             "./OHM-Modified/*"
         ]
+    },
+    "dependencies": {
+        "exceljs": "^4.2.0"
     }
 }
