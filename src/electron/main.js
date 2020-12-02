@@ -4,6 +4,7 @@ const path = require('path');
 const spawn = require('child_process').spawn;
 const fs = require('fs')
 const SystemData = require('./sysinfo');
+const DB = require("./dbsetup")
 const cpuStressTest = require("./cpuStressTest")
 const exportToExcel = require('./excel').exportToExcel
 
@@ -30,6 +31,7 @@ function createWindow () {
         })
         mainWindow.webContents.openDevTools()
     }
+    DB.Setup(ipcMain,mainWindow)
     cpuStressTest.cpuStressTestSetup(ipcMain,mainWindow)
     const customMenu = new Menu()
     Menu.setApplicationMenu(customMenu)
@@ -112,3 +114,4 @@ app.on('window-all-closed', function () {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+
