@@ -1,8 +1,3 @@
-{"Hardware":"cpu","ConstraintType":"load","Operator":">","TestValue":"22","Reports":["Report 1","Report 2"],"_id":"uCBC1lsp89yKJAmC","createdAt":{"$$date":1606690137878},"updatedAt":{"$$date":1606690137878}}
-{"Hardware":"cpu","ConstraintType":"temp","Operator":"Equals =","TestValue":"99","Reports":["Report 1","Report 2"],"_id":"wwFE9Gf5f9sBHgtF","createdAt":{"$$date":1606690884554},"updatedAt":{"$$date":1606690884554}}
-{"$$deleted":true,"_id":"uCBC1lsp89yKJAmC"}
-{"Hardware":"mainboard","ConstraintType":"load","Operator":">","TestValue":"3","Reports":["Report 1","Report 2"],"_id":"dEn8M78KgPT4PgVm","createdAt":{"$$date":1606691025925},"updatedAt":{"$$date":1606691025925}}
-{"Hardware":"mainboard","ConstraintType":"temp","Operator":"<","TestValue":"0","Reports":["Report 1","Report 2"],"_id":"6ckq6A3oxCgTQfnT","createdAt":{"$$date":1606691035606},"updatedAt":{"$$date":1606691035606}}
-{"$$deleted":true,"_id":"6ckq6A3oxCgTQfnT"}
-{"$$deleted":true,"_id":"wwFE9Gf5f9sBHgtF"}
-{"Hardware":"cpu","ConstraintType":"load","Operator":">","TestValue":"88","Reports":["Report 1","Report 2"],"_id":"rKC5gREL9E3AdOoh","createdAt":{"$$date":1606691050480},"updatedAt":{"$$date":1606691050480}}
+{"Hardware":"cpu","ConstraintType":"load","Operator":">","TestValue":"77","Reports":["Report 1","Report 2"],"_id":"0fEHQAolsgF3Yiy2","createdAt":{"$$date":1606866470724},"updatedAt":{"$$date":1606866470724}}
+{"Hardware":"hdd","ConstraintType":"temp","Operator":"Equals =","TestValue":"77","Reports":["Report 1","Report 2"],"_id":"BQTH0ybgw7GuHymd","createdAt":{"$$date":1606941654502},"updatedAt":{"$$date":1606941654502}}
+{"Hardware":"cpu","ConstraintType":"temp","Operator":">","TestValue":"66","Reports":["Report 1","Report 2"],"_id":"uf0HJOgzyFBQo8oc","createdAt":{"$$date":1606941641621},"updatedAt":{"$$date":1606941641621}}
