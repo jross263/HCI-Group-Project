@@ -1,3 +1,6 @@
 {"Hardware":"cpu","ConstraintType":"load","Operator":">","TestValue":"77","Reports":["Report 1","Report 2"],"_id":"0fEHQAolsgF3Yiy2","createdAt":{"$$date":1606866470724},"updatedAt":{"$$date":1606866470724}}
 {"Hardware":"hdd","ConstraintType":"temp","Operator":"Equals =","TestValue":"77","Reports":["Report 1","Report 2"],"_id":"BQTH0ybgw7GuHymd","createdAt":{"$$date":1606941654502},"updatedAt":{"$$date":1606941654502}}
 {"Hardware":"cpu","ConstraintType":"temp","Operator":">","TestValue":"66","Reports":["Report 1","Report 2"],"_id":"uf0HJOgzyFBQo8oc","createdAt":{"$$date":1606941641621},"updatedAt":{"$$date":1606941641621}}
+{"Hardware":"ram","ConstraintType":"load","Operator":"<","TestValue":"66","Reports":["Report 1","Report 2"],"_id":"fNv7fmGx6uMGwan7","createdAt":{"$$date":1606942625016},"updatedAt":{"$$date":1606942625016}}
+{"Hardware":"ram","ConstraintType":"temp","Operator":"Equals =","TestValue":"3","Reports":["Report 1","Report 2"],"_id":"HIEsiWee4jQfxhRO","createdAt":{"$$date":1606942634642},"updatedAt":{"$$date":1606942634642}}
+{"$$deleted":true,"_id":"fNv7fmGx6uMGwan7"}
