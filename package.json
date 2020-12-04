@@ -24,6 +24,8 @@
         ]
     },
     "dependencies": {
-        "exceljs": "^4.2.0"
+        "chart.js": "^2.9.4",
+        "exceljs": "^4.2.0",
+        "moment": "^2.29.1"
     }
 }
