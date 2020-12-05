@@ -6,6 +6,7 @@ const fs = require('fs')
 const SystemData = require('./sysinfo');
 const DB = require("./dbsetup")
 const cpuStressTest = require("./cpuStressTest")
+const gpuStressTest = require("./gpuStressTest")
 const exportToExcel = require('./excel').exportToExcel
 
 function createWindow () {
@@ -33,6 +34,7 @@ function createWindow () {
     }
     DB.Setup(ipcMain,mainWindow)
     cpuStressTest.cpuStressTestSetup(ipcMain,mainWindow)
+    gpuStressTest.gpuStressTestSetup(ipcMain,mainWindow)
     const customMenu = new Menu()
     Menu.setApplicationMenu(customMenu)
 
