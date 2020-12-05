@@ -11,8 +11,12 @@
         <script src="../js/external/bootstrap/bootstrap.min.js"></script>
         <script src="../js/gauge.js"></script>
         <script src="../js/device.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
         <style>
-
+  
         .button2 {
           margin: 0;
           position: absolute;
@@ -29,43 +33,135 @@
           padding: 16px 32px;
           font-size: 16px;
 
-          text-align: center;
-        }
-        .button2:hover {background-color: #3e8e41}
+      text-align: center;
+    }
 
-        </style>
-    </head>
+    .button2:hover {
+      background-color: #3e8e41
+    }
+  </style>
+</head>
 
-    <body>
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <button type="button" id="back-btn" class="btn btn-primary">Back</button>
-            <li class="nav-item" role="presentation">
-              <a class="nav-link active" id="device-info-tab" data-toggle="tab" href="#device-info" role="tab" aria-controls="device-info"  aria-selected="true">Device Info</a>
-            </li>
-            <li class="nav-item" role="presentation">
-              <a class="nav-link" id="stress-test-tab" data-toggle="tab" href="#stress-test" role="tab" aria-controls="stress-test" aria-selected="false">Stress Test</a>
-            </li>
-            <li class="nav-item" role="presentation">
-              <a class="nav-link" id="reports-tab" data-toggle="tab" href="#reports" role="tab" aria-controls="reports" aria-selected="false">Reports</a>
-            </li>
-          </ul>
-          <div class="tab-content" id="myTabContent">
-<div class="tab-pane fade show active" id="device-info" role="tabpanel" aria-labelledby="device-info-tab">
-  <div id="device-stats"></div>
-  <canvas id="myGauge"></canvas>
+<body>
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <button type="button" id="back-btn" class="btn btn-primary">Back</button>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link active" id="device-info-tab" data-toggle="tab" href="#device-info" role="tab"
+        aria-controls="device-info" aria-selected="true">Device Info</a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" id="stress-test-tab" data-toggle="tab" href="#stress-test" role="tab"
+        aria-controls="stress-test" aria-selected="false">Stress Test</a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" id="reports-tab" data-toggle="tab" href="#reports" role="tab" aria-controls="reports"
+        aria-selected="false">Reports</a>
+    </li>
+  </ul>
+  <div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="device-info" role="tabpanel" aria-labelledby="device-info-tab">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-9">
+
+          </div>
+          <div class="col">
+            Basic/Advanced
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-9">
+            <div class="chart-container" style="position: relative; height:40vh; width:70vw"> 
+              <canvas id="myChart"></canvas>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="container">
+              <div class="row">
+                <div class="col-12">
+                  <canvas id="utilizationGauge"></canvas>
+                </div>
+
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <canvas id="temperatureGauge"></canvas>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <canvas id="healthGauge"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>      
+    <div class="tab-pane fade homePageAlign aboveGpustress" id="stress-test" role="tabpanel" aria-labelledby="stress-test-tab">
+      <div id='d1' style="position:absolute; top:300px; left:25px; z-index:1">  
+        <canvas id="myGauge2"></canvas>
+      </div>
+      <div id='d2' style="position:absolute; top:300px; left:560px; z-index:1">  
+        <canvas id="myGauge3"></canvas>
+      </div>
+      <button class="button2" id="startCPUStressTest">Start</button>
+
+      <div class="loadingDivGPU">
+        <div id="loadingBarGPUID" class="loadingBarGPU">0%</div>
+      </div>
   
-</div>
-<div class="tab-pane fade homePageAlign aboveGpustress" id="stress-test" role="tabpanel" aria-labelledby="stress-test-tab">
-    <div class="loadingDivGPU">
-      <div id="loadingBarGPUID" class="loadingBarGPU">0%</div>
+    <button class="button2" id="myButton2">Start</button>
     </div>
+    <div class="tab-pane fade ReportsSection" id="reports" role="tabpanel" aria-labelledby="reports-tab">
+      <div class="AlertSection"></div>
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            Constraint Number
+          </div>
+          <div class="col">
+            Constraint Type
+          </div>
+          <div class="col">
+            Reports
+          </div>
+        </div>
+      </div>
+      <div class="container Constraints">
 
-  <button class="button2" id="myButton2">Start</button>
-<!--    <iframe id="gpuStressTest"-->
-<!--            width="1000"-->
-<!--            height="1000"-->
-<!--            src="https://web.basemark.com">-->
-<!--    </iframe>-->
+      </div>
+      <br><br>
+      <form id="AddContraint" onsubmit="return flase;">
+        <input required type="text" hidden name="Hardware">
+        <div class="form-group">
+          <label for="ConstraintType">Select the stat you will be checking</label>
+          <select class="form-control" name="ConstraintType" id="ConstraintType">
+            <option value="load">Utilization: Load %</option>
+            <option value="temp">Temperature: Degree celsius</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="Operator">Choose a constraint operator</label>
+          <select required class="form-control" name="Operator" id="Operator">
+            <option value=">">Greater Than ></option>
+            <option value="<">Less Than << /option>
+            <option vlaue="=">Equals =</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="TestValue">Choose a constraint value</label>
+          <input required type="number" name="TestValue" class="form-control" id="TestValue"
+            placeholder="This value will be used with the operator to generate the constraint">
+        </div>
+        <p>**Example Constraint: load % > 80. Reports created when this is true</p>
+        <button id="AddContraint" type="button" class="btn btn-primary">Add Constraint</button>
+      </form>
+    </div>
+  </div>
+  <script src='../js/db.js'></script>
+</body>
 
 </div>
             <div class="tab-pane fade ReportsSection" id="reports" role="tabpanel" aria-labelledby="reports-tab">

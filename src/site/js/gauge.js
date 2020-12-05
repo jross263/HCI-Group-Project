@@ -44,4 +44,14 @@ class Gauge {
         this.ctx.closePath();
         this.ctx.fill();
     }
+    updateWidthHeight(widthHeight){
+        this.canvas.width = widthHeight
+        this.canvas.height = widthHeight
+    }
+    updateFont(newFont){
+        this.options.font = newFont 
+    }
+    getText(){
+        return this.options.centerText
+    }
 }
