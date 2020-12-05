@@ -18,6 +18,7 @@
         <style>
   
         .button2 {
+          
           margin: 0;
           position: absolute;
           top: 80%;
@@ -100,16 +101,31 @@
 
     </div>
     <div class="tab-pane fade" id="stress-test" role="tabpanel" aria-labelledby="stress-test-tab">
-      <div style="width: 600px; display: table-cell;"> 
-        <canvas id="myChart2"></canvas>
+
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col">
+            <div class="chart-container" style="position: relative; height:600px; width:1000px">  
+              <canvas id="myChart2"></canvas>
+            </div>
+          </div>
+          </div>
+        <div class ="row">
+          <div class="col">
+          <div id='d1'>  
+            <canvas id="myGauge2"></canvas>
+          </div>
+          </div>
+          <div class="col">
+          <button class="button2" id="startCPUStressTest">Start</button> 
+          </div>
+          <div class="col">
+          <div id='d2' >  
+            <canvas id="myGauge3"></canvas>
+          </div>
+          </div>
       </div>
-      <div id='d1' style="position:absolute; top:300px; left:25px; z-index:1">  
-        <canvas id="myGauge2"></canvas>
       </div>
-      <div id='d2' style="position:absolute; top:300px; left:560px; z-index:1">  
-        <canvas id="myGauge3"></canvas>
-      </div>
-      <button class="button2" id="startCPUStressTest">Start</button>
     </div>
     <div class="tab-pane fade ReportsSection" id="reports" role="tabpanel" aria-labelledby="reports-tab">
       <div class="AlertSection"></div>
