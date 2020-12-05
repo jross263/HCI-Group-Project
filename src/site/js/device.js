@@ -92,7 +92,8 @@ $(function() {
         }, 
         tooltips: {
             enabled:false
-        }
+        },
+        responsive: true
     }
 
     const myChart = document.getElementById('myChart').getContext('2d');
