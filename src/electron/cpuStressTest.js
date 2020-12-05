@@ -5,9 +5,9 @@ function cpuStressTestSetup(ipcMain,mainWindow){
     ipcMain.on("cpu-Stress-Test-Start",(event,args)=>{
         let pathName = process.resourcesPath;
         if(process.env.DEV){
-            pathName = path.join(__dirname, "..");
+            pathName = path.join(__dirname, "..","..");
         }
-        const cpuStressTest = spawn("powershell.exe",[path.join(pathName,"ps1/cpuStressTest.ps1")]);
+        const cpuStressTest = spawn(path.join(pathName,"StressTest/CPUStressTest.exe"));
         currentPid = cpuStressTest.pid
     })
     ipcMain.on("cpu-Stress-Test-Stop",(event,args)=>{
