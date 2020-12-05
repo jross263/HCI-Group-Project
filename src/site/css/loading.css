@@ -3,6 +3,29 @@ body {
   position: relative;
 }
 
+.homePageAlign {
+  text-align:center;
+  /*border:1px solid #666;*/
+}
+
+.homePageImage {
+  display:inline-block;
+  margin:5px 20px;
+  padding:5px;
+
+  /*border:1px solid #CCC;*/
+}
+
+.test:hover {
+  box-shadow: 0 0 11px rgba(33,33,33,.2);
+}
+
+.homeRightTabBar
+{
+    text-align:center;
+}
+
+
 .loader {
   position: absolute;
   top: 50%;

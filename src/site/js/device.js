@@ -78,11 +78,12 @@ $(function() {
             }], 
             yAxes: [{
                 ticks:{
-                    beginAtZero : true
+                    beginAtZero : true,
+                    suggestedMax: 100
                 },
                 scaleLabel: {
                     display: true, 
-                    labelString : "Value",
+                    labelString : "Utilization",
                     fontSize : 20,
                 },
             }]
@@ -134,20 +135,28 @@ $(function() {
     api.send(`${group}-info-subscribe`, 1000)
     
     api.receive(`${group}-info`,(info)=>{
-        Gauges.forEach((gauge)=>{
-            let type = gauge.getText();
-            if(type == "Temperature:"){
-                gauge.draw(info[0].temperature[info[0].temperature.length-1].Value.split(" ")[0])
-            }
-            else if(type == "Utilization:"){
-                gauge.draw(info[0].load[0].Value.split(" ")[0])
-            }
-        })
+        if(info[0].load){
+            b.draw(info[0].load[0].Value.split(" ")[0])
+            Gauges.forEach((gauge)=>{
+                let type = gauge.getText();
+                if(type == "Utilization:"){
+                    gauge.draw(info[0].load[0].Value.split(" ")[0])
+                }
+            })
+            loadData(info[0].load[0].Value.split(" ")[0],myLineChart)
+            loadData(info[0].load[0].Value.split(" ")[0],advancedViewChart11)
+            setTimeout(loadData, updateLineGraph)
+        }
+        if(info[0].temperature){
+            c.draw(info[0].temperature[2].Value.split(" ")[0])
+            Gauges.forEach((gauge)=>{
+                let type = gauge.getText();
+                if(type == "Temperature:"){
+                    gauge.draw(info[0].temperature[info[0].temperature.length-1].Value.split(" ")[0])
+                }
+            })
+        }
         console.log(info)
-        loadData(info[0].load[0].Value.split(" ")[0])
-        setTimeout(loadData, updateLineGraph)
-        $("#device-stats").empty()
-        $("#device-stats").append(`Device : ${info[0].Text}<br>`)
     })
 });
 
