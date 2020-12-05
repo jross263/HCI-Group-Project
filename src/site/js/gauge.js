@@ -6,7 +6,7 @@ class Gauge {
         this.canvas.height = this.options.width_height
         this.ctx = this.canvas.getContext("2d");
     }
-    draw(percentage){
+    draw(percentage,text=""){
         let color = "#00ff00"
         if(percentage/100 >= .50 && percentage/100 <= .75){
             color = "#ffff00"
@@ -23,7 +23,31 @@ class Gauge {
         this.ctx.fillStyle = "black";
         this.ctx.textAlign = "center";
         this.ctx.fillText(this.options.centerText, this.canvas.width/2, this.canvas.height/2);
-        this.ctx.fillText((percentage/100*100).toFixed(2)+this.options.metricSymbol, this.canvas.width/2, this.canvas.height/2 + this.canvas.height/10);
+        if(text){
+            this.ctx.fillText(text, this.canvas.width/2, this.canvas.height/2 + this.canvas.height/10);
+        }else{
+            this.ctx.fillText((percentage/100*100).toFixed(2)+this.options.metricSymbol, this.canvas.width/2, this.canvas.height/2 + this.canvas.height/10);
+        }
+    }
+    healthDraw(util,temp){
+        if(util < 25 && temp < 25){
+            this.draw(25,"Good")
+        }else if(util < 25 && temp < 50){
+            this.draw(35,"OK")
+        }else if(util < 25 && temp > 50){
+            this.draw(35,"Bad")
+        }else if(util < 50 && temp < 50){
+            this.draw(35,"OK")
+        }else if(util < 50 && temp > 50){
+            this.draw(35,"Bad")
+        }else if(util < 75 && temp < 50){
+            this.draw(35,"Good")
+        }else if(util < 75 && temp < 60){
+            this.draw(35,"OK")
+        }else if(util < 75 && temp > 60){
+            this.draw(35,"Bad")
+        }
+
     }
     drawLine(startX, startY, endX, endY){
         this.ctx.beginPath();

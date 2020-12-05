@@ -15,6 +15,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+        <link rel="stylesheet" href="../css/device.css" />
         <style>
   
         .button2 {
@@ -44,7 +45,7 @@
 
 <body>
   <ul class="nav nav-tabs" id="myTab" role="tablist">
-    <button type="button" id="back-btn" class="btn btn-primary">Back</button>
+    <button type="button" id="back-btn" class="btn btn-primary m-1">Back</button>
     <li class="nav-item" role="presentation">
       <a class="nav-link active" id="device-info-tab" data-toggle="tab" href="#device-info" role="tab"
         aria-controls="device-info" aria-selected="true">Device Info</a>
@@ -61,11 +62,11 @@
   <div class="tab-content" id="myTabContent">
     <div class="tab-pane fade show active" id="device-info" role="tabpanel" aria-labelledby="device-info-tab">
       <div class="container-fluid">
-        <div class="row">
+        <div class="row mb-2 mt-2">
           <div class="col-9">
 
           </div>
-          <div class="col">
+          <div class="col center">
             <button type="button" id="showAdvancedView"class="btn btn-secondary">Show Advanced View</button>
           </div>
         </div>
@@ -76,21 +77,21 @@
             </div>
           </div>
           <div class="col-3">
-            <div class="container">
+            <div class="container center">
               <div class="row">
                 <div class="col-12">
-                  <canvas id="utilizationGauge"></canvas>
+                  <canvas id="utilization_basic_Gauge"></canvas>
                 </div>
 
               </div>
               <div class="row">
                 <div class="col-12">
-                  <canvas id="temperatureGauge"></canvas>
+                  <canvas id="temperature_basic_Gauge"></canvas>
                 </div>
               </div>
               <div class="row">
                 <div class="col-12">
-                  <canvas id="healthGauge"></canvas>
+                  <canvas id="health_basic_Gauge"></canvas>
                 </div>
               </div>
             </div>
@@ -100,41 +101,47 @@
 
     </div>
     <div class="tab-pane fade" id="advancedView">
-      <h1>ADVANCED VIEW</h1>
       <div class="container-fluid">
-        <div class="row">
-          <div class="col-9">
-
+        <div class="row mb-2 mt-2">
+          <div class="col-4 center" id="core-entry">
+            
           </div>
           <div class="col">
+          </div>
+          <div class="col-3 center">
             <button type="button" id="showBasicView"class="btn btn-secondary">Show Basic View</button>
           </div>
         </div>
         <div class="row">
-          <div class="col-9">
-            <div class="chart-container" style="position: relative; height:40vh; width:70vw"> 
-              <canvas id="advancedViewChart1"></canvas>
+          <div class="col-6">
+            <div class="chart-container" style="position: relative; height:100%; width:100%"> 
+              <canvas id="advancedViewChartUtil"></canvas>
             </div>
           </div>
-          <div class="col-3">
-            <div class="container">
+          <div class="col-6">
+            <div class="chart-container" style="position: relative; height:100%; width:100%"> 
+              <canvas id="advancedViewChartTemp"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            <div class="container-fluid">
               <div class="row">
-                <div class="col-12">
-                  <canvas id="utilizationGauge"></canvas>
+                <div class="col-4">
+                  <canvas id="utilization_advanced_Gauge"></canvas>
                 </div>
-
-              </div>
-              <div class="row">
-                <div class="col-12">
-                  <canvas id="temperatureGauge"></canvas>
+                <div class="col-4">
+                  <canvas id="temperature_advanced_Gauge"></canvas>
                 </div>
-              </div>
-              <div class="row">
-                <div class="col-12">
-                  <canvas id="healthGauge"></canvas>
+                <div class="col-4">
+                  <canvas id="health_advanced_Gauge"></canvas> 
                 </div>
               </div>
             </div>
+          </div>
+          <div class="col-6">
+
           </div>
         </div>
       </div>

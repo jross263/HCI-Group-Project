@@ -1,0 +1,12 @@
+.center{
+    text-align: center;
+}
+
+.pretend-link{
+    color: #0000EE;
+    cursor: pointer;
+}
+
+.active{
+    cursor: default;
+}

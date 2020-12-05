@@ -1,12 +1,14 @@
-$(async function() {
-    const STRESS_TESTABLE = ['cpu','gpu']
+$(async function () {
+    const STRESS_TESTABLE = ['cpu', 'gpu']
     const params = new URLSearchParams(window.location.search)
     const group = params.get("group")
     const updateLineGraph = 20
     var keepData = 25
-    var updateCount = 0 
-   
-    $("#back-btn").on("click",()=>{
+    var updateCount = 0
+
+    let CurrCore = 0
+
+    $("#back-btn").on("click", () => {
         api.send(`${group}-info-unsubscribe`)
         let newURL = window.location.href.split("/")
         newURL.pop()
@@ -15,44 +17,72 @@ $(async function() {
         window.location.href = newURL
     })
 
-    $("#showAdvancedView").on("click",()=>{
+    $("#showAdvancedView").on("click", () => {
         $("#device-info").removeClass("show active")
         $("#advancedView").addClass("show active")
+        isAdvancedView = true
     })
 
-    $("#showBasicView").on("click",()=>{
+    $("#showBasicView").on("click", () => {
         $("#advancedView").removeClass("show active")
         $("#device-info").addClass("show active")
+        isAdvancedView = false
+        CurrCore = 0
     })
 
-    if(!STRESS_TESTABLE.includes(group)){
+    if (!STRESS_TESTABLE.includes(group)) {
         $("#stress-test-tab").parent().hide()
     }
 
-    console.log(group);
+    let ranOnce = false
+    const buildAdvanced = (info) => {
+        if (group === "cpu" && !ranOnce) {
+            ranOnce = true
+            $("#core-entry").append(`<nav aria-label="breadcrumb"><ol class="breadcrumb" id="corelist"><li id="core-0"class="breadcrumb-item active pretend-link">All Cores</li></ol></nav>`)
+            $("#core-0").on("click", (e) => {
+                $(".breadcrumb-item.active.pretend-link").removeClass("active")
+                $("#core-0").addClass("active")
+                CurrCore = 0
+            })
+            info[0].load.forEach((ele, i) => {
+                if (i !== 0) {
+                    let pre_core = ele.Text.split(" ")
+                    pre_core.shift()
+                    let core = pre_core.join(" ")
+                    $("#corelist").append(`<li class="breadcrumb-item pretend-link" core="${i}" id="core-${i}">${core}</li>`)
+                    $("#core-" + i).on("click", (e) => {
+                        $(".breadcrumb-item.active.pretend-link").removeClass("active")
+                        $("#core-" + i).addClass("active")
+                        CurrCore = i
+                    })
+                }
+            })
+        }
+    }
+
 
     clicked = true;
-    $(document).ready(function(){
-      $("#myButton2").click(function(){
-            if(clicked && (!group.localeCompare("cpu"))){
+    $(document).ready(function () {
+        $("#myButton2").click(function () {
+            if (clicked && (!group.localeCompare("cpu"))) {
                 $(this).css('background-color', 'red');
                 document.getElementById("myButton2").innerHTML = "Stop"
-                clicked  = false;
+                clicked = false;
                 api.send("cpu-Stress-Test-Start")
-                  //Start stress test
-                } 
-            else if (!clicked && (!group.localeCompare("cpu"))){
-                $(this).css('background-color', 'green');  
+                //Start stress test
+            }
+            else if (!clicked && (!group.localeCompare("cpu"))) {
+                $(this).css('background-color', 'green');
                 document.getElementById("myButton2").innerHTML = "Start"
-                clicked  = true;
+                clicked = true;
                 api.send("cpu-Stress-Test-Stop")
                 //if stress test is running stop
-              }
-              else if(clicked && (!group.localeCompare("gpu"))){
-                  $(this).css('background-color', 'red');
-                  document.getElementById("myButton2").innerHTML = "In Progress"
-                  $(".myButton2").prop('disabled',true);
-                  clicked  = false;
+            }
+            else if (clicked && (!group.localeCompare("gpu"))) {
+                $(this).css('background-color', 'red');
+                document.getElementById("myButton2").innerHTML = "In Progress"
+                $(".myButton2").prop('disabled', true);
+                clicked = false;
                 i = 8
                 var elem = document.getElementById("loadingBarGPUID");
                 var widthAdd = i / 10;
@@ -62,167 +92,89 @@ $(async function() {
 
 
                 function frame() {
-                console.log('in fucn', widthAdd);
-                  if (width >= 100) {
-                    elem.style.width = 100 + "%";
-                    elem.innerHTML = 100 + "%";
-                    clearInterval(id);
-                  } else {
-                    width += widthAdd;
-                    elem.style.width = Number((width).toFixed(0)) + "%";
-                    elem.innerHTML = Number((width).toFixed(0)) + "%";
-                  }
+                    if (width >= 100) {
+                        elem.style.width = 100 + "%";
+                        elem.innerHTML = 100 + "%";
+                        clearInterval(id);
+                    } else {
+                        width += widthAdd;
+                        elem.style.width = Number((width).toFixed(0)) + "%";
+                        elem.innerHTML = Number((width).toFixed(0)) + "%";
+                    }
                 }
 
-                  api.send("gpu-Stress-Test-Start")
+                api.send("gpu-Stress-Test-Start")
 
 
 
 
 
-                  //Start stress test
-              }
-              else if (!clicked && (!group.localeCompare("gpu"))){
-                  $(this).css('background-color', 'green');
-                  document.getElementById("myButton2").innerHTML = "Start"
-                  $(".myButton2").prop('enabled',true);
-                  clicked  = true;
-                  document.getElementById("loadingBarGPUID").style.width = 0 + "%";
-                  document.getElementById("loadingBarGPUID").innerHTML = 0 + "%";
+                //Start stress test
+            }
+            else if (!clicked && (!group.localeCompare("gpu"))) {
+                $(this).css('background-color', 'green');
+                document.getElementById("myButton2").innerHTML = "Start"
+                $(".myButton2").prop('enabled', true);
+                clicked = true;
+                document.getElementById("loadingBarGPUID").style.width = 0 + "%";
+                document.getElementById("loadingBarGPUID").innerHTML = 0 + "%";
 
-                  api.send("gpu-Stress-Test-Stop")
-                  //if stress test is running stop
-          }
-      });
+                api.send("gpu-Stress-Test-Stop")
+                //if stress test is running stop
+            }
+        });
     });
 
     clicked = true;
-    $("#startCPUStressTest").click(function(){
-            if(clicked){
-                $(this).css('background-color', 'red');
-                document.getElementById("startCPUStressTest").innerHTML = "Stop"
-                clicked  = false;
-                api.send("cpu-Stress-Test-Start")
-                  //Start stress test
-            } 
-            else {
-                $(this).css('background-color', 'green');  
-                document.getElementById("startCPUStressTest").innerHTML = "Start"
-                clicked  = true;
-                api.send("cpu-Stress-Test-Stop")
-                //if stress test is running stop
-            }   
+    $("#startCPUStressTest").click(function () {
+        if (clicked) {
+            $(this).css('background-color', 'red');
+            document.getElementById("startCPUStressTest").innerHTML = "Stop"
+            clicked = false;
+            api.send("cpu-Stress-Test-Start")
+            //Start stress test
+        }
+        else {
+            $(this).css('background-color', 'green');
+            document.getElementById("startCPUStressTest").innerHTML = "Start"
+            clicked = true;
+            api.send("cpu-Stress-Test-Stop")
+            //if stress test is running stop
+        }
     });
 
-    let Gauges = []
-    
-    $("[id$='Gauge']").each((index,ele)=>{
-        let name = ele.id.substring(0,ele.id.length-5)
-        let symbol = name == "temperature" ? "°C" : "%"
-        Gauges.push(new Gauge({
-            canvas : ele,
-            width_height : $(window).width()*(2/12) - 10,
-            font : ($(window).width()*(2/12))*.10 + "px Arial",
-            centerText : name.charAt(0).toUpperCase() + name.slice(1) + ":",
-            metricSymbol : symbol
-        }))
+    let Gauges = {}
+
+    $("[id$='Gauge']").each((index, ele) => {
+        let name = ele.id.split("_")
+        let symbol = ""
+        if (name[0] == "temperature") {
+            symbol = "°C"
+        } else if (name[0] === "utilization") {
+            symbol = "%"
+        }
+        Gauges[name[0] + name[1]] = new Gauge({
+            canvas: ele,
+            width_height: $(window).width() * (2 / 12) - 30,
+            font: ($(window).width() * (2 / 12)) * .10 + "px Arial",
+            centerText: name[0].charAt(0).toUpperCase() + name[0].slice(1) + ":",
+            metricSymbol: symbol
+        })
     })
 
     $(window).resize(function () {
-        let width = $(window).width()*(2/12) - 10;
-        Gauges.forEach((gauge)=>{
-            gauge.updateWidthHeight(width)
-            gauge.updateFont(width*.10 + "px Arial")
-        })
-    });
-
-    var graphOptions = {
-        scales: {
-            xAxes: [{
-                scaleLabel: {
-                    display: true, 
-                    labelString : "Time",
-                    fontSize : 20,
-                  },
-                  type: "time",
-                  time: {
-                    unit: "second",
-                    displayFormats: {
-                      second: "hh:mm:ss"
-                    }
-                  },
-                  position: "bottom"
-            }], 
-            yAxes: [{
-                ticks:{
-                    beginAtZero : true,
-                    suggestedMax: 100
-                },
-                scaleLabel: {
-                    display: true, 
-                    labelString : "Utilization",
-                    fontSize : 20,
-                },
-            }]
-        }, 
-        legend:{
-            display: true 
-        }, 
-        tooltips: {
-            enabled:false
-        },
-        responsive: true
-    }
-
-    const myChart = document.getElementById('myChart').getContext('2d');
-    const myLineChart = new Chart(myChart, {
-        type: 'line',
-        data: {
-            datasets: [{
-                label: group.toUpperCase() + ' value',
-                fontSize : 20,
-                backgroundColor: 'rgb(0, 99, 132)',
-                borderColor: 'rgb(0, 99, 132)',
-                fill : false,
-                data: 0
-            }]
-        },
-        options: Object.assign({}, graphOptions, {
-            title:{
-                display : true, 
-                text: group.toUpperCase(),
-                fontSize : 25
-            }
+        let width = $(window).width() * (2 / 12) - 30;
+        Object.keys(Gauges).forEach(key => {
+            Gauges[key].updateWidthHeight(width)
+            Gauges[key].updateFont(width * .10 + "px Arial")
         })
     });
 
 
-    const advancedViewChart1 = document.getElementById('advancedViewChart1').getContext('2d');
-    const advancedViewChart11 = new Chart(advancedViewChart1, {
-        type: 'line',
-        data: {
-            datasets: [{
-                label: group.toUpperCase() + ' value',
-                fontSize : 20,
-                backgroundColor: 'rgb(0, 99, 132)',
-                borderColor: 'rgb(0, 99, 132)',
-                fill : false,
-                data: 0
-            }]
-        },
-        options: Object.assign({}, graphOptions, {
-            title:{
-                display : true, 
-                text: group.toUpperCase(),
-                fontSize : 25
-            }
-        })
-    });
-
-    function loadData(data,chart) {
+    function loadData(data, chart) {
         if (data) {
             chart.data.labels.push(new Date()); //idk what this does
-            chart.data.datasets.forEach((dataset) =>{dataset.data.push(data)});
+            chart.data.datasets.forEach((dataset) => { dataset.data.push(data) });
             if (updateCount > keepData) {
                 chart.data.labels.shift();
                 chart.data.datasets[0].data.shift();
@@ -235,46 +187,203 @@ $(async function() {
 
     var myCanvas2 = document.getElementById("myGauge2");
     var b = new Gauge({
-        canvas : myCanvas2,
-        width_height : 200,
-        font : "15px Arial",
-        centerText : "Utilization:",
-        metricSymbol : "%"
+        canvas: myCanvas2,
+        width_height: 200,
+        font: "15px Arial",
+        centerText: "Utilization:",
+        metricSymbol: "%"
     })
-    
+
     var myCanvas3 = document.getElementById("myGauge3");
     var c = new Gauge({
-        canvas : myCanvas3,
-        width_height : 200,
-        font : "15px Arial",
-        centerText : "Temperature",
-        metricSymbol : " C"
-    }) 
+        canvas: myCanvas3,
+        width_height: 200,
+        font: "15px Arial",
+        centerText: "Temperature",
+        metricSymbol: " C"
+    })
+
+    var graphOptionsUtil = {
+        scales: {
+            xAxes: [{
+                scaleLabel: {
+                    display: true,
+                    labelString: "Time",
+                    fontSize: 20,
+                },
+                type: "time",
+                time: {
+                    unit: "second",
+                    displayFormats: {
+                        second: "hh:mm:ss"
+                    }
+                },
+                position: "bottom"
+            }],
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true,
+                    suggestedMax: 100
+                },
+                scaleLabel: {
+                    display: true,
+                    labelString: "Utilization",
+                    fontSize: 20,
+                },
+            }]
+        },
+        legend: {
+            display: true
+        },
+        tooltips: {
+            enabled: false
+        },
+        responsive: true
+    }
+    var graphOptionsTemp = {
+        scales: {
+            xAxes: [{
+                scaleLabel: {
+                    display: true,
+                    labelString: "Time",
+                    fontSize: 20,
+                },
+                type: "time",
+                time: {
+                    unit: "second",
+                    displayFormats: {
+                        second: "hh:mm:ss"
+                    }
+                },
+                position: "bottom"
+            }],
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true,
+                    suggestedMax: 100
+                },
+                scaleLabel: {
+                    display: true,
+                    labelString: "Temperature",
+                    fontSize: 20,
+                },
+            }]
+        },
+        legend: {
+            display: true
+        },
+        tooltips: {
+            enabled: false
+        },
+        responsive: true
+    }
+    let basicViewChartUtil, advancedViewChartUtil, advancedViewChartTemp;
+    let buildGraphsOnce = false
+
+    const processGraphs = (info) => {
+        if (!buildGraphsOnce) {
+            buildGraphsOnce = true
+            if (info[0].load) {
+                const basicViewChartUtilCanvas = document.getElementById('myChart').getContext('2d');
+                basicViewChartUtil = new Chart(basicViewChartUtilCanvas, {
+                    type: 'line',
+                    data: {
+                        datasets: [{
+                            label: group.toUpperCase() + ' value',
+                            fontSize: 20,
+                            backgroundColor: 'rgb(0, 99, 132)',
+                            borderColor: 'rgb(0, 99, 132)',
+                            fill: false,
+                            data: 0
+                        }]
+                    },
+                    options: Object.assign({}, graphOptionsUtil, {
+                        title: {
+                            display: true,
+                            text: group.toUpperCase(),
+                            fontSize: 25
+                        }
+                    })
+                });
+                const advancedViewChartUtilCanvas = document.getElementById('advancedViewChartUtil').getContext('2d');
+                advancedViewChartUtil = new Chart(advancedViewChartUtilCanvas, {
+                    type: 'line',
+                    data: {
+                        datasets: [{
+                            label: group.toUpperCase() + ' value',
+                            fontSize: 20,
+                            backgroundColor: 'rgb(0, 99, 132)',
+                            borderColor: 'rgb(0, 99, 132)',
+                            fill: false,
+                            data: 0
+                        }]
+                    },
+                    options: Object.assign({}, graphOptionsUtil, {
+                        title: {
+                            display: true,
+                            text: group.toUpperCase(),
+                            fontSize: 25
+                        }
+                    })
+                });
+            }
+            if (info[0].temperature) {
+                const advancedViewChartTempCanvas = document.getElementById('advancedViewChartTemp').getContext('2d');
+                advancedViewChartTemp = new Chart(advancedViewChartTempCanvas, {
+                    type: 'line',
+                    data: {
+                        datasets: [{
+                            label: group.toUpperCase() + ' value',
+                            fontSize: 20,
+                            backgroundColor: 'rgb(0, 99, 132)',
+                            borderColor: 'rgb(0, 99, 132)',
+                            fill: false,
+                            data: 0
+                        }]
+                    },
+                    options: Object.assign({}, graphOptionsTemp, {
+                        title: {
+                            display: true,
+                            text: group.toUpperCase(),
+                            fontSize: 25
+                        }
+                    })
+                });
+            }
+
+
+        }
+        if (info[0].load) {
+            loadData(info[0].load[CurrCore].Value.split(" ")[0], basicViewChartUtil)
+            loadData(info[0].load[CurrCore].Value.split(" ")[0], advancedViewChartUtil)
+        }
+        if (info[0].temperature) {
+            loadData(info[0].temperature[info[0].temperature.length - 1].Value.split(" ")[0], advancedViewChartTemp)
+        }
+        setTimeout(loadData, updateLineGraph)
+    }
 
     api.send(`${group}-info-subscribe`, 1000)
-    
-    api.receive(`${group}-info`,(info)=>{
-        if(info[0].load){
-            b.draw(info[0].load[0].Value.split(" ")[0])
-            Gauges.forEach((gauge)=>{
-                let type = gauge.getText();
-                if(type == "Utilization:"){
-                    gauge.draw(info[0].load[0].Value.split(" ")[0])
-                }
-            })
-            loadData(info[0].load[0].Value.split(" ")[0],myLineChart)
-            loadData(info[0].load[0].Value.split(" ")[0],advancedViewChart11)
-            setTimeout(loadData, updateLineGraph)
-        }
-        if(info[0].temperature){
-            c.draw(info[0].temperature[2].Value.split(" ")[0])
-            Gauges.forEach((gauge)=>{
-                let type = gauge.getText();
-                if(type == "Temperature:"){
-                    gauge.draw(info[0].temperature[info[0].temperature.length-1].Value.split(" ")[0])
-                }
-            })
-        }
+
+    api.receive(`${group}-info`, (info) => {
         console.log(info)
+        processGraphs(info)
+        buildAdvanced(info)
+        if (info[0].load) {
+            b.draw(info[0].load[0].Value.split(" ")[0])
+            Gauges["utilizationbasic"].draw(info[0].load[CurrCore].Value.split(" ")[0])
+            Gauges["utilizationadvanced"].draw(info[0].load[CurrCore].Value.split(" ")[0])
+        }
+        if (info[0].temperature) {
+            c.draw(info[0].temperature[2].Value.split(" ")[0])
+            Gauges["temperaturebasic"].draw(info[0].temperature[info[0].temperature.length - 1].Value.split(" ")[0])
+            Gauges["temperatureadvanced"].draw(info[0].temperature[info[0].temperature.length - 1].Value.split(" ")[0])
+        }
+        if (info[0].load && info[0].temperature) {
+            let util = info[0].load[CurrCore].Value.split(" ")[0]
+            let temp = info[0].temperature[info[0].temperature.length - 1].Value.split(" ")[0]
+            Gauges["healthbasic"].healthDraw(util, temp)
+            Gauges["healthadvanced"].healthDraw(util, temp)
+        }
     })
 });
