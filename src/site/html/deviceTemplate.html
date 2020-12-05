@@ -66,12 +66,12 @@
 
           </div>
           <div class="col">
-            Basic/Advanced
+            <button type="button" id="showAdvancedView"class="btn btn-secondary">Show Advanced View</button>
           </div>
         </div>
         <div class="row">
           <div class="col-9">
-            <div style="width: 600px; display: table-cell;"> 
+            <div class="chart-container" style="position: relative; height:40vh; width:70vw"> 
               <canvas id="myChart"></canvas>
             </div>
           </div>
@@ -99,8 +99,61 @@
       </div>
 
     </div>
-    <div class="tab-pane fade" id="stress-test" role="tabpanel" aria-labelledby="stress-test-tab">
+    <div class="tab-pane fade" id="advancedView">
+      <h1>ADVANCED VIEW</h1>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-9">
+
+          </div>
+          <div class="col">
+            <button type="button" id="showBasicView"class="btn btn-secondary">Show Basic View</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-9">
+            <div class="chart-container" style="position: relative; height:40vh; width:70vw"> 
+              <canvas id="advancedViewChart1"></canvas>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="container">
+              <div class="row">
+                <div class="col-12">
+                  <canvas id="utilizationGauge"></canvas>
+                </div>
+
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <canvas id="temperatureGauge"></canvas>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <canvas id="healthGauge"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+    <div class="tab-pane fade homePageAlign aboveGpustress" id="stress-test" role="tabpanel" aria-labelledby="stress-test-tab">
+      <div id='d1' style="position:absolute; top:300px; left:25px; z-index:1">  
+        <canvas id="myGauge2"></canvas>
+      </div>
+      <div id='d2' style="position:absolute; top:300px; left:560px; z-index:1">  
+        <canvas id="myGauge3"></canvas>
+      </div>
       <button class="button2" id="startCPUStressTest">Start</button>
+
+      <div class="loadingDivGPU">
+        <div id="loadingBarGPUID" class="loadingBarGPU">0%</div>
+      </div>
+  
+    <button class="button2" id="myButton2">Start</button>
     </div>
     <div class="tab-pane fade ReportsSection" id="reports" role="tabpanel" aria-labelledby="reports-tab">
       <div class="AlertSection"></div>
@@ -150,5 +203,4 @@
   </div>
   <script src='../js/db.js'></script>
 </body>
-
 </html>

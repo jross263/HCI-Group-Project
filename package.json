@@ -24,7 +24,8 @@
         ]
     },
     "dependencies": {
+        "exceljs": "^4.2.0",
         "nedb-promises": "^4.1.0",
-        "exceljs": "^4.2.0"
+        "python-shell": "^2.0.3"
     }
 }

@@ -1,4 +1,4 @@
-$(function() {
+$(async function() {
     const STRESS_TESTABLE = ['cpu','gpu']
     const params = new URLSearchParams(window.location.search)
     const group = params.get("group")
@@ -15,9 +15,86 @@ $(function() {
         window.location.href = newURL
     })
 
+    $("#showAdvancedView").on("click",()=>{
+        $("#device-info").removeClass("show active")
+        $("#advancedView").addClass("show active")
+    })
+
+    $("#showBasicView").on("click",()=>{
+        $("#advancedView").removeClass("show active")
+        $("#device-info").addClass("show active")
+    })
+
     if(!STRESS_TESTABLE.includes(group)){
         $("#stress-test-tab").parent().hide()
     }
+
+    console.log(group);
+
+    clicked = true;
+    $(document).ready(function(){
+      $("#myButton2").click(function(){
+            if(clicked && (!group.localeCompare("cpu"))){
+                $(this).css('background-color', 'red');
+                document.getElementById("myButton2").innerHTML = "Stop"
+                clicked  = false;
+                api.send("cpu-Stress-Test-Start")
+                  //Start stress test
+                } 
+            else if (!clicked && (!group.localeCompare("cpu"))){
+                $(this).css('background-color', 'green');  
+                document.getElementById("myButton2").innerHTML = "Start"
+                clicked  = true;
+                api.send("cpu-Stress-Test-Stop")
+                //if stress test is running stop
+              }
+              else if(clicked && (!group.localeCompare("gpu"))){
+                  $(this).css('background-color', 'red');
+                  document.getElementById("myButton2").innerHTML = "In Progress"
+                  $(".myButton2").prop('disabled',true);
+                  clicked  = false;
+                i = 8
+                var elem = document.getElementById("loadingBarGPUID");
+                var widthAdd = i / 10;
+                var width = i / 10;
+
+                var id = setInterval(frame, 100);
+
+
+                function frame() {
+                console.log('in fucn', widthAdd);
+                  if (width >= 100) {
+                    elem.style.width = 100 + "%";
+                    elem.innerHTML = 100 + "%";
+                    clearInterval(id);
+                  } else {
+                    width += widthAdd;
+                    elem.style.width = Number((width).toFixed(0)) + "%";
+                    elem.innerHTML = Number((width).toFixed(0)) + "%";
+                  }
+                }
+
+                  api.send("gpu-Stress-Test-Start")
+
+
+
+
+
+                  //Start stress test
+              }
+              else if (!clicked && (!group.localeCompare("gpu"))){
+                  $(this).css('background-color', 'green');
+                  document.getElementById("myButton2").innerHTML = "Start"
+                  $(".myButton2").prop('enabled',true);
+                  clicked  = true;
+                  document.getElementById("loadingBarGPUID").style.width = 0 + "%";
+                  document.getElementById("loadingBarGPUID").innerHTML = 0 + "%";
+
+                  api.send("gpu-Stress-Test-Stop")
+                  //if stress test is running stop
+          }
+      });
+    });
 
     clicked = true;
     $("#startCPUStressTest").click(function(){
@@ -93,7 +170,8 @@ $(function() {
         }, 
         tooltips: {
             enabled:false
-        }
+        },
+        responsive: true
     }
 
     const myChart = document.getElementById('myChart').getContext('2d');
@@ -118,19 +196,60 @@ $(function() {
         })
     });
 
-    function loadData(data) {
+
+    const advancedViewChart1 = document.getElementById('advancedViewChart1').getContext('2d');
+    const advancedViewChart11 = new Chart(advancedViewChart1, {
+        type: 'line',
+        data: {
+            datasets: [{
+                label: group.toUpperCase() + ' value',
+                fontSize : 20,
+                backgroundColor: 'rgb(0, 99, 132)',
+                borderColor: 'rgb(0, 99, 132)',
+                fill : false,
+                data: 0
+            }]
+        },
+        options: Object.assign({}, graphOptions, {
+            title:{
+                display : true, 
+                text: group.toUpperCase(),
+                fontSize : 25
+            }
+        })
+    });
+
+    function loadData(data,chart) {
         if (data) {
-            myLineChart.data.labels.push(new Date()); //idk what this does
-            myLineChart.data.datasets.forEach((dataset) =>{dataset.data.push(data)});
+            chart.data.labels.push(new Date()); //idk what this does
+            chart.data.datasets.forEach((dataset) =>{dataset.data.push(data)});
             if (updateCount > keepData) {
-                myLineChart.data.labels.shift();
-                myLineChart.data.datasets[0].data.shift();
+                chart.data.labels.shift();
+                chart.data.datasets[0].data.shift();
             } else {
                 updateCount++
             }
-            myLineChart.update();
+            chart.update();
         }
     }
+
+    var myCanvas2 = document.getElementById("myGauge2");
+    var b = new Gauge({
+        canvas : myCanvas2,
+        width_height : 200,
+        font : "15px Arial",
+        centerText : "Utilization:",
+        metricSymbol : "%"
+    })
+    
+    var myCanvas3 = document.getElementById("myGauge3");
+    var c = new Gauge({
+        canvas : myCanvas3,
+        width_height : 200,
+        font : "15px Arial",
+        centerText : "Temperature",
+        metricSymbol : " C"
+    }) 
 
     api.send(`${group}-info-subscribe`, 1000)
     
@@ -159,4 +278,3 @@ $(function() {
         console.log(info)
     })
 });
-
