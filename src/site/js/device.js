@@ -15,6 +15,16 @@ $(async function() {
         window.location.href = newURL
     })
 
+    $("#showAdvancedView").on("click",()=>{
+        $("#device-info").removeClass("show active")
+        $("#advancedView").addClass("show active")
+    })
+
+    $("#showBasicView").on("click",()=>{
+        $("#advancedView").removeClass("show active")
+        $("#device-info").addClass("show active")
+    })
+
     if(!STRESS_TESTABLE.includes(group)){
         $("#stress-test-tab").parent().hide()
     }
@@ -185,17 +195,40 @@ $(async function() {
         })
     });
 
-    function loadData(data) {
+
+    const advancedViewChart1 = document.getElementById('advancedViewChart1').getContext('2d');
+    const advancedViewChart11 = new Chart(advancedViewChart1, {
+        type: 'line',
+        data: {
+            datasets: [{
+                label: group.toUpperCase() + ' value',
+                fontSize : 20,
+                backgroundColor: 'rgb(0, 99, 132)',
+                borderColor: 'rgb(0, 99, 132)',
+                fill : false,
+                data: 0
+            }]
+        },
+        options: Object.assign({}, graphOptions, {
+            title:{
+                display : true, 
+                text: group.toUpperCase(),
+                fontSize : 25
+            }
+        })
+    });
+
+    function loadData(data,chart) {
         if (data) {
-            myLineChart.data.labels.push(new Date()); //idk what this does
-            myLineChart.data.datasets.forEach((dataset) =>{dataset.data.push(data)});
+            chart.data.labels.push(new Date()); //idk what this does
+            chart.data.datasets.forEach((dataset) =>{dataset.data.push(data)});
             if (updateCount > keepData) {
-                myLineChart.data.labels.shift();
-                myLineChart.data.datasets[0].data.shift();
+                chart.data.labels.shift();
+                chart.data.datasets[0].data.shift();
             } else {
                 updateCount++
             }
-            myLineChart.update();
+            chart.update();
         }
     }
 
@@ -220,21 +253,22 @@ $(async function() {
     api.send(`${group}-info-subscribe`, 1000)
     
     api.receive(`${group}-info`,(info)=>{
-    b.draw(info[0].load[0].Value.split(" ")[0])
-    c.draw(info[0].temperature[2].Value.split(" ")[0])
-    Gauges.forEach((gauge)=>{
-        let type = gauge.getText();
-        if(type == "Temperature:"){
-            gauge.draw(info[0].temperature[info[0].temperature.length-1].Value.split(" ")[0])
-        }
-        else if(type == "Utilization:"){
-            gauge.draw(info[0].load[0].Value.split(" ")[0])
-        }
-    })
-    console.log(info)
-    loadData(info[0].load[0].Value.split(" ")[0])
-    setTimeout(loadData, updateLineGraph)
-    $("#device-stats").empty()
-    $("#device-stats").append(`Device : ${info[0].Text}<br>`)
+        b.draw(info[0].load[0].Value.split(" ")[0])
+        c.draw(info[0].temperature[2].Value.split(" ")[0])
+        Gauges.forEach((gauge)=>{
+            let type = gauge.getText();
+            if(type == "Temperature:"){
+                gauge.draw(info[0].temperature[info[0].temperature.length-1].Value.split(" ")[0])
+            }
+            else if(type == "Utilization:"){
+                gauge.draw(info[0].load[0].Value.split(" ")[0])
+            }
+        })
+        console.log(info)
+        loadData(info[0].load[0].Value.split(" ")[0],myLineChart)
+        loadData(info[0].load[0].Value.split(" ")[0],advancedViewChart11)
+        setTimeout(loadData, updateLineGraph)
+        $("#device-stats").empty()
+        $("#device-stats").append(`Device : ${info[0].Text}<br>`)
     })
 });
