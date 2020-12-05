@@ -1,18 +1,20 @@
 const http = require('http');
 const { resolve } = require('path');
 
+//These are the categories returned from OHM.
+let SYSTEM_DATA = {
+    "cpu" : [],
+    "gpu" : [],
+    "hdd" : [],
+    "bigng" : [],
+    "mainboard" : [],
+    "chip" : [],
+    "ram" : []
+}
+
 const Setup = (ipcMain,mainWindow) => {
 
-    //These are the categories returned from OHM.
-    let SYSTEM_DATA = {
-        "cpu" : [],
-        "gpu" : [],
-        "hdd" : [],
-        "bigng" : [],
-        "mainboard" : [],
-        "chip" : [],
-        "ram" : []
-    }
+    
 
     //Dict of current subscriptions from the browser
     let subscriptions = {}
@@ -118,5 +120,10 @@ const WaitForWebserver = () => {
             });
     })
 }
+
+const getSystemDataBackend = () => {
+    return SYSTEM_DATA;
+}
 exports.Setup = Setup;
 exports.WaitForWebserver = WaitForWebserver;
+exports.getSystemDataBackend = getSystemDataBackend;
