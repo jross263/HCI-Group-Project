@@ -116,8 +116,29 @@ $(function() {
             }
         })
     });
+    const myChart2 = document.getElementById('myChart2').getContext('2d');
+    const myLineChart2 = new Chart(myChart2, {
+        type: 'line',
+        data: {
+            datasets: [{
+                label: group.toUpperCase() + ' value',
+                fontSize : 20,
+                backgroundColor: 'rgb(0, 99, 132)',
+                borderColor: 'rgb(0, 99, 132)',
+                fill : false,
+                data: 0
+            }]
+        },
+        options: Object.assign({}, graphOptions, {
+            title:{
+                display : true, 
+                text: group.toUpperCase(),
+                fontSize : 25
+            }
+        })
+    });
 
-    function loadData(data) {
+    function loadData(data, myLineChart) {
         if (data) {
             myLineChart.data.labels.push(new Date()); //idk what this does
             myLineChart.data.datasets.forEach((dataset) =>{dataset.data.push(data)});
@@ -164,7 +185,8 @@ $(function() {
         }
     })
     console.log(info)
-    loadData(info[0].load[0].Value.split(" ")[0])
+    loadData(info[0].load[0].Value.split(" ")[0], myLineChart)
+    loadData(info[0].load[0].Value.split(" ")[0], myLineChart2)
     setTimeout(loadData, updateLineGraph)
     $("#device-stats").empty()
     $("#device-stats").append(`Device : ${info[0].Text}<br>`)
