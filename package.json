@@ -24,8 +24,7 @@
         ]
     },
     "dependencies": {
-        "chart.js": "^2.9.4",
-        "exceljs": "^4.2.0",
-        "moment": "^2.29.1"
+        "nedb-promises": "^4.1.0",
+        "exceljs": "^4.2.0"
     }
 }

@@ -126,10 +126,8 @@ $(function() {
     api.receive(`${group}-info`,(info)=>{
         console.log(info)
         a.draw(info[0].load[0].Value.split(" ")[0])
-        for (let i = 0; i < 100; i++) {
-            loadData(info[i].load[0].Value.split(" ")[0])
-            setTimeout(loadData, updateLineGraph)
-        }
+        loadData(info[0].load[0].Value.split(" ")[0])
+        setTimeout(loadData, updateLineGraph)
         $("#device-stats").empty()
         $("#device-stats").append(`Device : ${info[0].Text}<br>`)
     })
