@@ -93,7 +93,8 @@ $(function() {
         tooltips: {
             enabled:false
         },
-        responsive: true
+        responsive: true,
+        maintainAspectRatio: false
     }
 
     const myChart = document.getElementById('myChart').getContext('2d');
@@ -114,7 +115,7 @@ $(function() {
                 display : true, 
                 text: group.toUpperCase(),
                 fontSize : 25
-            }
+            }            
         })
     });
     const myChart2 = document.getElementById('myChart2').getContext('2d');

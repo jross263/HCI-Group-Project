@@ -19,7 +19,7 @@
   
         .button2 {
           
-          margin: 0;
+          /* margin: 0;
           position: absolute;
           top: 80%;
           left: 50%;
@@ -30,7 +30,7 @@
           align-items: center;
           border-radius: 15px;
           border: none;
-          color: white;
+          color: white; */
           padding: 16px 32px;
           font-size: 16px;
 
@@ -101,32 +101,29 @@
 
     </div>
     <div class="tab-pane fade" id="stress-test" role="tabpanel" aria-labelledby="stress-test-tab">
-
-      <div class="container-fluid">
+      <div class="container-fluid">       
         <div class="row">
-          <div class="col">
-            <div class="chart-container" style="position: relative; height:600px; width:1000px">  
+          <div class="col-12">
+            <div class="chart-container" style="position: relative; margin:0 auto; height:40vh; width:70vw">  
               <canvas id="myChart2"></canvas>
             </div>
           </div>
-          </div>
-        <div class ="row">
-          <div class="col">
-          <div id='d1'>  
-            <canvas id="myGauge2"></canvas>
-          </div>
-          </div>
-          <div class="col">
-          <button class="button2" id="startCPUStressTest">Start</button> 
-          </div>
-          <div class="col">
-          <div id='d2' >  
-            <canvas id="myGauge3"></canvas>
-          </div>
-          </div>
+        </div>
       </div>
-      </div>
-    </div>
+      <div class="container-fluid"  style="margin-top:5vw;">              
+          <div class="row align-items-center">
+            <div class="col-4 d-flex justify-content-center">          
+              <canvas id="myGauge2"></canvas>            
+            </div>
+            <div class="col-4 d-flex justify-content-center">
+              <button class="button2 btn btn-primary" id="startCPUStressTest">Start</button>
+            </div>
+            <div class="col-4 d-flex justify-content-center">            
+              <canvas id="myGauge3"></canvas>            
+            </div>
+          </div>
+        </div>                               
+      </div>        
     <div class="tab-pane fade ReportsSection" id="reports" role="tabpanel" aria-labelledby="reports-tab">
       <div class="AlertSection"></div>
       <div class="container">
