@@ -156,7 +156,7 @@ $(async function () {
         Gauges[name[0] + name[1]] = new Gauge({
             canvas: ele,
             width_height: $(window).width() * (2 / 12) - 30,
-            font: ($(window).width() * (2 / 12)) * .10 + "px Arial",
+            font: ($(window).width() * (2 / 12) -30) * .10 + "px Arial",
             centerText: name[0].charAt(0).toUpperCase() + name[0].slice(1) + ":",
             metricSymbol: symbol
         })
