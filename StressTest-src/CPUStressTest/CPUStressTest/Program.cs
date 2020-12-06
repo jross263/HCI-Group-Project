@@ -32,7 +32,7 @@ namespace CPUStressTest
         static void Main(string[] args)
         {
             int cpuUsage = 100;
-            int time = 10000;
+            int time = 10000000;
             List<Thread> threads = new List<Thread>();
             for (int i = 0; i < Environment.ProcessorCount; i++)
             {
