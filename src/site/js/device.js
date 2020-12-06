@@ -185,24 +185,6 @@ $(async function () {
         }
     }
 
-    var myCanvas2 = document.getElementById("myGauge2");
-    var b = new Gauge({
-        canvas: myCanvas2,
-        width_height: 200,
-        font: "15px Arial",
-        centerText: "Utilization:",
-        metricSymbol: "%"
-    })
-
-    var myCanvas3 = document.getElementById("myGauge3");
-    var c = new Gauge({
-        canvas: myCanvas3,
-        width_height: 200,
-        font: "15px Arial",
-        centerText: "Temperature",
-        metricSymbol: " C"
-    })
-
     var graphOptionsUtil = {
         scales: {
             xAxes: [{
@@ -238,7 +220,8 @@ $(async function () {
         tooltips: {
             enabled: false
         },
-        responsive: true
+        responsive: true,
+        maintainAspectRatio: false
     }
     var graphOptionsTemp = {
         scales: {
@@ -326,6 +309,27 @@ $(async function () {
                         }
                     })
                 });
+                const cpuStressTestChartCanvas = document.getElementById('cpuStressTestChart').getContext('2d');
+                cpuStressTestChart = new Chart(cpuStressTestChartCanvas, {
+                    type: 'line',
+                    data: {
+                        datasets: [{
+                            label: group.toUpperCase() + ' value',
+                            fontSize: 20,
+                            backgroundColor: 'rgb(0, 99, 132)',
+                            borderColor: 'rgb(0, 99, 132)',
+                            fill: false,
+                            data: 0
+                        }]
+                    },
+                    options: Object.assign({}, graphOptionsUtil, {
+                        title: {
+                            display: true,
+                            text: group.toUpperCase(),
+                            fontSize: 25
+                        }
+                    })
+                });
             }
             if (info[0].temperature) {
                 const advancedViewChartTempCanvas = document.getElementById('advancedViewChartTemp').getContext('2d');
@@ -356,6 +360,7 @@ $(async function () {
         if (info[0].load) {
             loadData(info[0].load[CurrCore].Value.split(" ")[0], basicViewChartUtil)
             loadData(info[0].load[CurrCore].Value.split(" ")[0], advancedViewChartUtil)
+            loadData(info[0].load[CurrCore].Value.split(" ")[0], cpuStressTestChart)
         }
         if (info[0].temperature) {
             loadData(info[0].temperature[info[0].temperature.length - 1].Value.split(" ")[0], advancedViewChartTemp)
@@ -370,14 +375,14 @@ $(async function () {
         processGraphs(info)
         buildAdvanced(info)
         if (info[0].load) {
-            b.draw(info[0].load[0].Value.split(" ")[0])
             Gauges["utilizationbasic"].draw(info[0].load[CurrCore].Value.split(" ")[0])
             Gauges["utilizationadvanced"].draw(info[0].load[CurrCore].Value.split(" ")[0])
+            Gauges["utilizationStressTest"].draw(info[0].load[CurrCore].Value.split(" ")[0])
         }
         if (info[0].temperature) {
-            c.draw(info[0].temperature[2].Value.split(" ")[0])
             Gauges["temperaturebasic"].draw(info[0].temperature[info[0].temperature.length - 1].Value.split(" ")[0])
             Gauges["temperatureadvanced"].draw(info[0].temperature[info[0].temperature.length - 1].Value.split(" ")[0])
+            Gauges["temperatureStressTest"].draw(info[0].temperature[info[0].temperature.length - 1].Value.split(" ")[0])
         }
         if (info[0].load && info[0].temperature) {
             let util = info[0].load[CurrCore].Value.split(" ")[0]
