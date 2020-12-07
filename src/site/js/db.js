@@ -1,7 +1,11 @@
 $(function() {
     const params = new URLSearchParams(window.location.search)
     const group = params.get("group")
-
+    if(group == "ram"){        
+        $("#ConstraintType option")[1].innerHTML = "Power Utilization"
+        $("#ConstraintType option")[1].value = "power"
+    }
+    
     function displayConstraints(){
         $(".Constraints").empty()    
         api.send('db-get',{Hardware: group}) 
@@ -12,7 +16,7 @@ $(function() {
         objectArray.forEach(function(item){
             JsonObj[item.name] = item.value         
         });        
-        JsonObj["Reports"] = ["Report 1","Report 2"]
+        JsonObj["Reports"] = []
         return JsonObj
     }
 
@@ -31,6 +35,7 @@ $(function() {
         displayConstraints()            
         $("#AddContraint button").on( "click", AddConstraint)                            
     });         
+    
 
     api.receive("receive-db",(info)=>{     
         info.forEach(function(item,index){
@@ -43,13 +48,17 @@ $(function() {
             `<div class="form-group">        
              <select class="form-control ReportsSelect" >`            
             item.Reports.forEach(function(thing,ind){
-                htmlreportsStart += `<option>${thing}</option>`
+                htmlreportsStart += `<option value="${ind}">Report ${ind}</option>`
             });            
             htmlreportsStart += `</select></div>`
 
             htmlStart += htmlMiddle 
-            htmlStart += htmlreportsStart 
-            var htmlEnd = `</div></div></div>`
+            htmlStart += htmlreportsStart
+            var newURL = window.location.href.split("/")            
+            newURL.pop()
+            newURL.push("reportViewer.html?ConstraintID="+item._id+"&group="+group+"&ReportID=")        
+            newURL = newURL.join("/")               
+            var htmlEnd = `</div><div class="col"><a href="${newURL}" class="btn btn-primary ViewReport">View Report</a></div></div></div>`
             htmlStart += htmlEnd                        
             $(".Constraints").append(htmlStart)
         });
@@ -61,6 +70,13 @@ $(function() {
             $(".AlertSection").empty()
             $(".AlertSection").prepend('<div class="alert alert-danger" role="alert">Constraint Deleted</div>')
         });  
+
+        $(".ViewReport").on("click", function(){
+            var ReportClicked = $(this).parent().prev().find("select").val()
+            var newURL = $(this).attr("href")
+            $(this).attr("href", newURL+ReportClicked.toString())           
+            console.log(newURL)        
+        });
     })      
 });
 

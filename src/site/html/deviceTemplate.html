@@ -2,7 +2,7 @@
 
     <head>
         <meta charset="utf-8">
-        <title>App</title>
+        <title>Team 1 4474 Monitor Tool</title>
         <meta name="description" content="App">
         <script src="../js/external/jquery/jquery-3.5.1.min.js"></script>
         <link rel="stylesheet" href="../css/external/bootstrap/bootstrap.min.css" />
@@ -198,8 +198,8 @@
           <label for="Operator">Choose a constraint operator</label>
           <select required class="form-control" name="Operator" id="Operator">
             <option value=">">Greater Than ></option>
-            <option value="<">Less Than << /option>
-            <option vlaue="=">Equals =</option>
+            <option value="<">Less Than < </option>
+            <option vlaue="=">Equals = </option>
           </select>
         </div>
         <div class="form-group">
@@ -207,6 +207,7 @@
           <input required type="number" name="TestValue" class="form-control" id="TestValue"
             placeholder="This value will be used with the operator to generate the constraint">
         </div>
+        <p>**Application must be left on the home page for reports to be generated</p>
         <p>**Example Constraint: load % > 80. Reports created when this is true</p>
         <button id="AddContraint" type="button" class="btn btn-primary">Add Constraint</button>
       </form>
