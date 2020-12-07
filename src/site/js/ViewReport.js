@@ -40,7 +40,7 @@ $(function(){
         if(report.hasOwnProperty("power")) {
             $(".row").append(`<div class="col power"><h5>Power</h5>`)
             report.power.forEach(function(item){
-                $(".power").append(`Power${item.Text}: ${item.Value} <br>`)
+                $(".power").append(`${item.Text}: ${item.Value} <br>`)
             });
             $(".power").append(`</div>`)
            
@@ -48,7 +48,7 @@ $(function(){
         if(report.hasOwnProperty("clock")) {
             $(".row").append(`<div class="col clock"><h5>Clock</h5>`)
             report.clock.forEach(function(item){
-                $(".clock").append(`Clock${item.Text}: ${item.Value} <br>`)
+                $(".clock").append(`${item.Text}: ${item.Value} <br>`)
             });  
             $(".clock").append(`</div>`)         
         } 

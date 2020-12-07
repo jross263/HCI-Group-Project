@@ -5,7 +5,7 @@ const HARDWARE_CATEGORIES = new Set(["cpu","gpu","hdd","bigng","mainboard","chip
 
 contextBridge.exposeInMainWorld("api",{
     send: (channel, ...data) =>{
-        let ALLOWED_CHANNELS = ["fetch-all-devices","db-create","db-get","db-delete","db-constraint-get","db-update", "cpu-Stress-Test-Start", "cpu-Stress-Test-Stop", "gpu-Stress-Test-Start", "gpu-Stress-Test-Stop"];
+        let ALLOWED_CHANNELS = ["fetch-all-devices","db-create","db-get","db-delete","db-constraint-get","db-update", "cpu-Stress-Test-Start", "cpu-Stress-Test-Stop", "gpu-Stress-Test-Start", "gpu-Stress-Test-Stop","start-report-listener"];
         HARDWARE_CATEGORIES.forEach(category =>{
             ALLOWED_CHANNELS.push(category+"-info-subscribe")
             ALLOWED_CHANNELS.push(category+"-info-unsubscribe")

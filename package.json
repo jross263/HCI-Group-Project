@@ -20,7 +20,8 @@
             "requestedExecutionLevel": "highestAvailable"
         },
         "extraResources": [
-            "./OHM-Modified/*"
+            "./OHM-Modified/*",
+            "./StressTest/*"
         ]
     },
     "dependencies": {

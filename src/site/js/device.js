@@ -1,5 +1,5 @@
 $(async function () {
-    const STRESS_TESTABLE = ['cpu', 'gpu']
+    const STRESS_TESTABLE = ['cpu']
     const params = new URLSearchParams(window.location.search)
     const group = params.get("group")
     const updateLineGraph = 20
@@ -7,6 +7,7 @@ $(async function () {
     var updateCount = 0
 
     let CurrCore = 0
+    let isAdvancedView = false
 
     $("#back-btn").on("click", () => {
         api.send(`${group}-info-unsubscribe`)
@@ -389,6 +390,41 @@ $(async function () {
             let temp = info[0].temperature[info[0].temperature.length - 1].Value.split(" ")[0]
             Gauges["healthbasic"].healthDraw(util, temp)
             Gauges["healthadvanced"].healthDraw(util, temp)
+        }
+        if(isAdvancedView){
+            $("#advancedViewStats").empty()
+            if(info[0].hasOwnProperty("temperature")) {
+                $("#advancedViewStats").append(`<div class="col temp"><h5>Temperature</h5>`)
+                info[0].temperature.forEach(function(item){
+                    $(".temp").append(`${item.Text}: ${item.Value} <br>`)
+                });
+                $(".temp").append(`</div>`)
+            } 
+            if(info[0].hasOwnProperty("level")) {
+                $("#advancedViewStats").append(`<div class="col level"><h5>Level</h5>`)
+                $(".level").append(`${info[0].level[0].Text}: ${info[0].level[0].Value} <br>`)
+                $(".level").append(`</div>`)
+            } 
+            if(info[0].hasOwnProperty("load")) {
+                $("#advancedViewStats").append(`<div class="col load"><h5>Load</h5>`)
+                $(".load").append(`${info[0].load[0].Text}: ${info[0].load[0].Value} <br>`)
+                $(".load").append(`</div>`)
+            } 
+            if(info[0].hasOwnProperty("power")) {
+                $("#advancedViewStats").append(`<div class="col power"><h5>Power</h5>`)
+                info[0].power.forEach(function(item){
+                    $(".power").append(`${item.Text}: ${item.Value} <br>`)
+                });
+                $(".power").append(`</div>`)
+               
+            } 
+            if(info[0].hasOwnProperty("clock")) {
+                $("#advancedViewStats").append(`<div class="col clock"><h5>Clock</h5>`)
+                info[0].clock.forEach(function(item){
+                    $(".clock").append(`${item.Text}: ${item.Value} <br>`)
+                });  
+                $(".clock").append(`</div>`)         
+            }
         }
     })
 });

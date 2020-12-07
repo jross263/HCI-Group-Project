@@ -42,7 +42,7 @@ $(function() {
             var htmlStart = `<div class="row Constraint-Row">`
             var htmlMiddle = 
             `<div class="col">${index}</div>
-            <div class="col Constraint-Col">${item.Hardware} ${item.ConstraintType} ${item.Operator} ${item.TestValue} <button type="button" class="btn btn-danger DeleteConstraint" data-id="${item._id}">Delete</button></div>
+            <div class="col Constraint-Col">${item.Hardware} ${item.ConstraintType} ${item.Operator} ${item.TestValue} <button type="button" class="btn btn-danger DeleteConstraint ml-2" data-id="${item._id}">Delete</button></div>
             <div class="col">`
             var htmlreportsStart = 
             `<div class="form-group">        

@@ -4,3 +4,4 @@ C:\Users\Jacob\Desktop\HCI-Group-Project\HCI-Group-Project\StressTest-src\CPUStr
 C:\Users\Jacob\Desktop\HCI-Group-Project\HCI-Group-Project\StressTest-src\CPUStressTest\CPUStressTest\obj\Debug\CPUStressTest.csproj.CoreCompileInputs.cache
 C:\Users\Jacob\Desktop\HCI-Group-Project\HCI-Group-Project\StressTest-src\CPUStressTest\CPUStressTest\obj\Debug\CPUStressTest.exe
 C:\Users\Jacob\Desktop\HCI-Group-Project\HCI-Group-Project\StressTest-src\CPUStressTest\CPUStressTest\obj\Debug\CPUStressTest.pdb
+C:\Users\Jacob\Desktop\HCI-Group-Project\HCI-Group-Project\StressTest-src\CPUStressTest\CPUStressTest\obj\Debug\CPUStressTest.csprojAssemblyReference.cache
