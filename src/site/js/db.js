@@ -53,8 +53,12 @@ $(function() {
             htmlreportsStart += `</select></div>`
 
             htmlStart += htmlMiddle 
-            htmlStart += htmlreportsStart 
-            var htmlEnd = `</div><div class="col"><button type="button" class="btn btn-primary ViewReport">View Report</button></div></div></div>`
+            htmlStart += htmlreportsStart
+            var newURL = window.location.href.split("/")            
+            newURL.pop()
+            newURL.push("reportViewer.html?ConstraintID="+item._id+"&group="+group+"&ReportID=")        
+            newURL = newURL.join("/")               
+            var htmlEnd = `</div><div class="col"><a href="${newURL}" class="btn btn-primary ViewReport">View Report</a></div></div></div>`
             htmlStart += htmlEnd                        
             $(".Constraints").append(htmlStart)
         });
@@ -68,8 +72,10 @@ $(function() {
         });  
 
         $(".ViewReport").on("click", function(){
-            console.log($(this).parent().prev().find("select").val())
-            //load report values into the new html page with basic view
+            var ReportClicked = $(this).parent().prev().find("select").val()
+            var newURL = $(this).attr("href")
+            $(this).attr("href", newURL+ReportClicked.toString())           
+            console.log(newURL)        
         });
     })      
 });

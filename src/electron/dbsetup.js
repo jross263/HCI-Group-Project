@@ -14,7 +14,12 @@ const Setup = (ipcMain,mainWindow) => {
         db.update(args)
         
     })
-
+    
+    ipcMain.on("db-constraint-get",(event,args)=>{        
+        db.read(args).then(record => {
+            mainWindow.webContents.send("receive-one",record);
+        })
+    })
     ipcMain.on("db-get",(event,args)=>{        
         db.readAll(args).then(allTodolists => {
             mainWindow.webContents.send("receive-db",allTodolists);

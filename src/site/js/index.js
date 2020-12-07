@@ -79,13 +79,13 @@ $(function(){
                 if(item.Hardware == "hdd"){                
                     if(item.ConstraintType == "temp"){
                         var newValue = parseFloat(hardwareInfo[0].temperature[0].Value) 
-                        var ReporttoAdd = hardwareInfo[0].temperature[0]
+                        var ReporttoAdd = hardwareInfo[0]
                         CheckConditions(item,ReporttoAdd,newValue)        
                     }
                     else{
                         var newValue = parseFloat(hardwareInfo[0].load[0].Value)
                         console.log(newValue) 
-                        var ReporttoAdd = hardwareInfo[0].load[0]
+                        var ReporttoAdd = hardwareInfo[0]
                         CheckConditions(item,ReporttoAdd,newValue)
                     }
                 }
@@ -94,22 +94,26 @@ $(function(){
                     if(item.ConstraintType == "temp"){
                         var endIndex = hardwareInfo[0].temperature.length -1
                         var newValue = parseFloat(hardwareInfo[0].temperature[endIndex].Value)                         
-                        var ReporttoAdd = hardwareInfo[0].temperature[endIndex]
+                        var ReporttoAdd = hardwareInfo[0]
                         CheckConditions(item,ReporttoAdd,newValue)
                     }
                     else{
                         var newValue = parseFloat(hardwareInfo[0].load[0].Value)                                             
-                        var ReporttoAdd = hardwareInfo[0].load[0]
+                        var ReporttoAdd = hardwareInfo[0]
                         CheckConditions(item,ReporttoAdd,newValue)
                     }
                 }
 
                 else if(item.Hardware == "gpu"){
                     if(item.ConstraintType == "temp"){
-                        
+                        var newValue = parseFloat(hardwareInfo[0].temperature[0].Value) 
+                        var ReporttoAdd = hardwareInfo[0]
+                        CheckConditions(item,ReporttoAdd,newValue)   
                     }
                     else{
-                        
+                        var newValue = parseFloat(hardwareInfo[0].load[0].Value)                                             
+                        var ReporttoAdd = hardwareInfo[0]
+                        CheckConditions(item,ReporttoAdd,newValue)
                     }
                 }
 
@@ -117,13 +121,13 @@ $(function(){
                     if(item.ConstraintType == "power"){
                         var newValue = parseFloat(hardwareInfo[0].power[0].Value)
                         console.log(newValue) 
-                        var ReporttoAdd = hardwareInfo[0].power[0]
+                        var ReporttoAdd = hardwareInfo[0]
                         CheckConditions(item,ReporttoAdd,newValue)
                     }
                     else{
                         var newValue = parseFloat(hardwareInfo[0].load[0].Value)
                         console.log(newValue) 
-                        var ReporttoAdd = hardwareInfo[0].load[0]
+                        var ReporttoAdd = hardwareInfo[0]
                         CheckConditions(item,ReporttoAdd,newValue)
                     }
                 }
