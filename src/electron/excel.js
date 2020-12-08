@@ -38,7 +38,7 @@ async function exportToExcel(systemData, file) {
                         }else{
                             Object.keys(device[deviceSensor]).forEach(nestedSensor => {
                                 if(nestedSensor != "Text" && nestedSensor != "Category"){
-                                    console.log(device[deviceSensor][nestedSensor])
+                                    //console.log(device[deviceSensor][nestedSensor])
                                     if(Array.isArray(device[deviceSensor][nestedSensor])){
                                         device[deviceSensor][nestedSensor].forEach((metric)=>{
                                             out = [nestedSensor]

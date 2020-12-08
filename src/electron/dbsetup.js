@@ -68,7 +68,7 @@ const Setup = (ipcMain,mainWindow) => {
                             }
                             else{
                                 var newValue = parseFloat(hardwareInfo[0].load[0].Value)
-                                console.log(newValue) 
+                                //console.log(newValue) 
                                 var ReporttoAdd = hardwareInfo[0]
                                 CheckConditions(item,ReporttoAdd,newValue)
                             }
@@ -104,13 +104,13 @@ const Setup = (ipcMain,mainWindow) => {
                         else if(item.Hardware == "ram"){
                             if(item.ConstraintType == "power"){
                                 var newValue = parseFloat(hardwareInfo[0].power[0].Value)
-                                console.log(newValue) 
+                                //console.log(newValue) 
                                 var ReporttoAdd = hardwareInfo[0]
                                 CheckConditions(item,ReporttoAdd,newValue)
                             }
                             else{
                                 var newValue = parseFloat(hardwareInfo[0].load[0].Value)
-                                console.log(newValue) 
+                                //console.log(newValue) 
                                 var ReporttoAdd = hardwareInfo[0]
                                 CheckConditions(item,ReporttoAdd,newValue)
                             }

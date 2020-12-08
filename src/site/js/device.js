@@ -372,7 +372,7 @@ $(async function () {
     api.send(`${group}-info-subscribe`, 1000)
 
     api.receive(`${group}-info`, (info) => {
-        console.log(info)
+        //console.log(info)
         processGraphs(info)
         buildAdvanced(info)
         if (info[0].load) {

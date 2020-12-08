@@ -2,7 +2,7 @@ const path = require('path');
 currentPid = 0;
 const spawn = require('child_process').spawn;
 function cpuStressTestSetup(ipcMain,mainWindow){
-    console.log("outside cpu: ");
+    //console.log("outside cpu: ");
     ipcMain.on("cpu-Stress-Test-Start",(event,args)=>{
         let pathName = process.resourcesPath;
         if(process.env.DEV){

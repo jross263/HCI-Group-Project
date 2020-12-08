@@ -63,7 +63,7 @@ const Setup = (ipcMain,mainWindow) => {
         });
 
         }).on("error", (err) => {
-            console.log("Error: " + err.message);
+            //console.log("Error: " + err.message);
         });
     }
     

@@ -40,7 +40,7 @@ function createWindow () {
 
     function wait(){
         SystemData.WaitForWebserver().then((status)=>{
-            console.log(status)
+            //console.log(status)
             if(status === "ready"){
 
                 const exportToCSVClick = (menuItem, browserWindow, event) => {
@@ -77,7 +77,7 @@ function createWindow () {
                 SystemData.Setup(ipcMain,mainWindow);
             }
         }).catch((err)=>{
-            console.log(err)
+            //console.log(err)
             wait()
         })
     }
@@ -89,7 +89,7 @@ function createWindow () {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
-    console.log(__dirname)
+    //console.log(__dirname)
     let pathName = process.resourcesPath;
     if(process.env.DEV){
         pathName = path.join(__dirname, "..","..");

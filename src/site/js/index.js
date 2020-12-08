@@ -2,7 +2,7 @@ $(function(){
     api.send("fetch-all-devices")
     api.receive("all-devices",(devices)=>{
         api.send("start-report-listener")
-        console.log(devices)
+        //console.log(devices)
         Object.keys(devices).forEach(deviceGroup => {
             if(devices[deviceGroup].length){
                 var name = "";

@@ -11,6 +11,7 @@
         <script src="../js/external/popper.js/popper.min.js"></script>
         <script src="../js/external/bootstrap/bootstrap.min.js"></script>
         <script src="../js/ViewReport.js"></script>
+        <script src="../js/gauge.js"></script>
     </head>
     <body>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -19,8 +20,20 @@
         <h1>Report Viewing Page</h1>
         <h3></h3>  
         <div class="container">
-            <div class="row">
+            <div class="row" id="Stat-Entry">
                 
+            </div>
+            <div class="row center mt-2">
+                <div class="col">
+                    <canvas id="utilization_Report_Gauge"></canvas>
+                </div>
+                <div class="col">
+                    <canvas id="temperature_Report_Gauge"></canvas>
+                </div>
+                <div class="col">
+                    <canvas id="health_Report_Gauge"></canvas>
+                </div>
+
             </div>
         </div>
 

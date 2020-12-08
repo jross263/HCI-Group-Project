@@ -75,7 +75,7 @@ $(function() {
             var ReportClicked = $(this).parent().prev().find("select").val()
             var newURL = $(this).attr("href")
             $(this).attr("href", newURL+ReportClicked.toString())           
-            console.log(newURL)        
+            //console.log(newURL)        
         });
     })      
 });

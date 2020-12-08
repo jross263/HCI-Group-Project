@@ -5,8 +5,13 @@ class Gauge {
         this.canvas.width = this.options.width_height
         this.canvas.height = this.options.width_height
         this.ctx = this.canvas.getContext("2d");
+        this.pre;
     }
-    draw(percentage,text=""){
+    draw(percentage=null,text=""){
+        if(!percentage){
+            percentage = this.pre
+        }
+        this.pre = percentage
         let color = "#00ff00"
         if(percentage/100 >= .50 && percentage/100 <= .75){
             color = "#ffff00"
@@ -42,10 +47,12 @@ class Gauge {
             this.draw(util,"Bad")
         }else if(util < 75 && temp < 50){
             this.draw(util,"Good")
-        }else if(util < 75 && temp < 60){
+        }else if(util <= 75 && temp < 60){
             this.draw(util,"OK")
-        }else if(util > 75 && temp > 60){
+        }else if(util >= 75 && temp > 60){
             this.draw(util,"Bad")
+        }else{
+            this.draw(50, "OK")
         }
 
     }

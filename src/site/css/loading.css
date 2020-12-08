@@ -61,3 +61,7 @@ body {
     box-shadow: 1.375em 0em #dec023, 1.375em 0em 0.625em -0.3125em rgba(0, 0, 0, 0.52), 2.75em 0.29721em #b8b74c, 2.75em -0.29721em 0.625em -0.3125em rgba(0, 0, 0, 0.52), 4.125em 0.18368em #93ae75, 4.125em -0.18368em 0.625em -0.3125em rgba(0, 0, 0, 0.52), 5.5em -0.18368em #6da59e, 5.5em 0.18368em 0.625em -0.3125em rgba(0, 0, 0, 0.52), 6.875em -0.29721em #479cc7, 6.875em 0.29721em 0.625em -0.3125em rgba(0, 0, 0, 0.52);
   }
 }
+
+.center{
+  text-align: center;
+}
