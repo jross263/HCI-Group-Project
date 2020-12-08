@@ -17,15 +17,15 @@ $(function(){
         }
         Gauges[name[0] + name[1]] = new Gauge({
             canvas: ele,
-            width_height: $(window).width() * (4 / 12) - 300,
-            font: ($(window).width() * (4 / 12) -300) * .10 + "px Arial",
+            width_height: $(window).width() * (2 / 12),
+            font: ($(window).width() * (2 / 12)) * .10 + "px Arial",
             centerText: name[0].charAt(0).toUpperCase() + name[0].slice(1) + ":",
             metricSymbol: symbol
         })
     })
 
     $(window).resize(function () {
-        let width = $(window).width() * (4 / 12) - 300;
+        let width = $(window).width() * (2 / 12);
         Object.keys(Gauges).forEach(key => {
             Gauges[key].updateWidthHeight(width)
             Gauges[key].updateFont(width * .10 + "px Arial")
