@@ -38,7 +38,7 @@ $(async function () {
     if(group === "gpu"){
         api.send("test-gpu")
         api.receive("test-gpu-result",res=>{
-            if(res){
+            if(!res){
                 $("#stress-test-tab").parent().show()
             }
         })
@@ -95,7 +95,6 @@ $(async function () {
             $(".loadingDivGPU").show()
             $(this).css('background-color', 'red');
             document.getElementById("startCPUStressTest").innerHTML = "Stop"
-            $(".myButton2").prop('disabled', true);
             clicked = false;
             i = 8
             var elem = document.getElementById("loadingBarGPUID");
@@ -109,7 +108,15 @@ $(async function () {
                 if (width >= 100) {
                     elem.style.width = 100 + "%";
                     elem.innerHTML = 100 + "%";
-                    clearInterval(id);
+                    $(".loadingDivGPU").hide()
+                    $("#startCPUStressTest").css('background-color', 'green');
+                    document.getElementById("startCPUStressTest").innerHTML = "Start"
+                    clicked = true;
+                    document.getElementById("loadingBarGPUID").style.width = 0 + "%";
+                    document.getElementById("loadingBarGPUID").innerHTML = 0 + "%";
+                    clearInterval(id)
+                    api.send("gpu-Stress-Test-Stop")
+
                 } else {
                     width += widthAdd;
                     elem.style.width = Number((width).toFixed(0)) + "%";
@@ -129,7 +136,6 @@ $(async function () {
             $(".loadingDivGPU").hide()
             $(this).css('background-color', 'green');
             document.getElementById("startCPUStressTest").innerHTML = "Start"
-            $(".startCPUStressTest").prop('enabled', true);
             clicked = true;
             document.getElementById("loadingBarGPUID").style.width = 0 + "%";
             document.getElementById("loadingBarGPUID").innerHTML = 0 + "%";

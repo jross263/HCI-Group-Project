@@ -21,7 +21,8 @@
         },
         "extraResources": [
             "./OHM-Modified/*",
-            "./StressTest/*"
+            "./StressTest/*",
+            "./StressTest-GPU/*"
         ]
     },
     "dependencies": {

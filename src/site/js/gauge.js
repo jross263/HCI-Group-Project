@@ -36,21 +36,21 @@ class Gauge {
     }
     healthDraw(util,temp){
         if(util < 25 && temp < 25){
-            this.draw(util,"Good")
+            this.draw(15,"Good")
         }else if(util < util && temp < 50){
-            this.draw(util,"OK")
+            this.draw(25,"OK")
         }else if(util < 25 && temp > 50){
-            this.draw(util,"Bad")
+            this.draw(85,"Bad")
         }else if(util < 50 && temp < 50){
-            this.draw(util,"OK")
+            this.draw(25,"OK")
         }else if(util < 50 && temp > 50){
-            this.draw(util,"Bad")
+            this.draw(85,"Bad")
         }else if(util < 75 && temp < 50){
-            this.draw(util,"Good")
+            this.draw(15,"Good")
         }else if(util <= 75 && temp < 60){
-            this.draw(util,"OK")
+            this.draw(25,"OK")
         }else if(util >= 75 && temp > 60){
-            this.draw(util,"Bad")
+            this.draw(85,"Bad")
         }else{
             this.draw(50, "OK")
         }

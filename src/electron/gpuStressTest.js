@@ -10,9 +10,9 @@ function gpuStressTestSetup(ipcMain,mainWindow){
 
     let pathName = process.resourcesPath;
         if(process.env.DEV){
-            pathName = path.join(__dirname);
+            pathName = path.join(__dirname,"..","..");
         }
-    const testPath = path.join(pathName,"test.py");
+    const testPath = path.join(pathName,"StressTest-GPU/checkGPU.py");
     pyshell.PythonShell.run(testPath, null, function (err, results) {
         if(results[0] === "Not Compatible"){
             runGPUTest = false;
@@ -24,9 +24,9 @@ function gpuStressTestSetup(ipcMain,mainWindow){
 
         let pathName = process.resourcesPath;
         if(process.env.DEV){
-            pathName = path.join(__dirname);
+            pathName = path.join(__dirname,"..","..");
         }
-        const realPath = path.join(pathName,"stressGPU.py");
+        const realPath = path.join(pathName,"StressTest-GPU/stressGPU.py");
 
         pyshell.PythonShell.run(realPath, null, function (err, results) {});
 
