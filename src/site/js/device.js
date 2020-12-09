@@ -35,6 +35,15 @@ $(async function () {
         $("#stress-test-tab").parent().hide()
     }
 
+    if(group === "gpu"){
+        api.send("test-gpu")
+        api.receive("test-gpu-result",res=>{
+            if(res){
+                $("#stress-test-tab").parent().show()
+            }
+        })
+    }
+
     let ranOnce = false
     const buildAdvanced = (info) => {
         if (group === "cpu" && !ranOnce) {
@@ -63,83 +72,69 @@ $(async function () {
 
 
     clicked = true;
-    $(document).ready(function () {
-        $("#myButton2").click(function () {
-            if (clicked && (!group.localeCompare("cpu"))) {
-                $(this).css('background-color', 'red');
-                document.getElementById("myButton2").innerHTML = "Stop"
-                clicked = false;
-                api.send("cpu-Stress-Test-Start")
-                //Start stress test
-            }
-            else if (!clicked && (!group.localeCompare("cpu"))) {
-                $(this).css('background-color', 'green');
-                document.getElementById("myButton2").innerHTML = "Start"
-                clicked = true;
-                api.send("cpu-Stress-Test-Stop")
-                //if stress test is running stop
-            }
-            else if (clicked && (!group.localeCompare("gpu"))) {
-                $(this).css('background-color', 'red');
-                document.getElementById("myButton2").innerHTML = "In Progress"
-                $(".myButton2").prop('disabled', true);
-                clicked = false;
-                i = 8
-                var elem = document.getElementById("loadingBarGPUID");
-                var widthAdd = i / 10;
-                var width = i / 10;
-
-                var id = setInterval(frame, 100);
-
-
-                function frame() {
-                    if (width >= 100) {
-                        elem.style.width = 100 + "%";
-                        elem.innerHTML = 100 + "%";
-                        clearInterval(id);
-                    } else {
-                        width += widthAdd;
-                        elem.style.width = Number((width).toFixed(0)) + "%";
-                        elem.innerHTML = Number((width).toFixed(0)) + "%";
-                    }
-                }
-
-                api.send("gpu-Stress-Test-Start")
-
-
-
-
-
-                //Start stress test
-            }
-            else if (!clicked && (!group.localeCompare("gpu"))) {
-                $(this).css('background-color', 'green');
-                document.getElementById("myButton2").innerHTML = "Start"
-                $(".myButton2").prop('enabled', true);
-                clicked = true;
-                document.getElementById("loadingBarGPUID").style.width = 0 + "%";
-                document.getElementById("loadingBarGPUID").innerHTML = 0 + "%";
-
-                api.send("gpu-Stress-Test-Stop")
-                //if stress test is running stop
-            }
-        });
-    });
+    $(".loadingDivGPU").hide()
 
     clicked = true;
+    var id;
     $("#startCPUStressTest").click(function () {
-        if (clicked) {
+        if (clicked && (!group.localeCompare("cpu"))) {
             $(this).css('background-color', 'red');
             document.getElementById("startCPUStressTest").innerHTML = "Stop"
             clicked = false;
             api.send("cpu-Stress-Test-Start")
             //Start stress test
         }
-        else {
+        else if (!clicked && (!group.localeCompare("cpu"))) {
             $(this).css('background-color', 'green');
             document.getElementById("startCPUStressTest").innerHTML = "Start"
             clicked = true;
             api.send("cpu-Stress-Test-Stop")
+            //if stress test is running stop
+        }
+        else if (clicked && (!group.localeCompare("gpu"))) {
+            $(".loadingDivGPU").show()
+            $(this).css('background-color', 'red');
+            document.getElementById("startCPUStressTest").innerHTML = "Stop"
+            $(".myButton2").prop('disabled', true);
+            clicked = false;
+            i = 8
+            var elem = document.getElementById("loadingBarGPUID");
+            var widthAdd = i / 10;
+            var width = i / 10;
+
+            id = setInterval(frame, 100);
+
+
+            function frame() {
+                if (width >= 100) {
+                    elem.style.width = 100 + "%";
+                    elem.innerHTML = 100 + "%";
+                    clearInterval(id);
+                } else {
+                    width += widthAdd;
+                    elem.style.width = Number((width).toFixed(0)) + "%";
+                    elem.innerHTML = Number((width).toFixed(0)) + "%";
+                }
+            }
+
+            api.send("gpu-Stress-Test-Start")
+
+
+
+
+
+            //Start stress test
+        }
+        else if (!clicked && (!group.localeCompare("gpu"))) {
+            $(".loadingDivGPU").hide()
+            $(this).css('background-color', 'green');
+            document.getElementById("startCPUStressTest").innerHTML = "Start"
+            $(".startCPUStressTest").prop('enabled', true);
+            clicked = true;
+            document.getElementById("loadingBarGPUID").style.width = 0 + "%";
+            document.getElementById("loadingBarGPUID").innerHTML = 0 + "%";
+            clearInterval(id)
+            api.send("gpu-Stress-Test-Stop")
             //if stress test is running stop
         }
     });

@@ -98,7 +98,7 @@
           <div class="col">
           </div>
           <div class="col-3 center">
-            <button type="button" id="showBasicView"class="btn btn-secondardy">Show Basic View</button>
+            <button type="button" id="showBasicView"class="btn btn-secondary">Show Basic View</button>
           </div>
         </div>
         <div class="row" style="
@@ -149,6 +149,13 @@
           <div class="col-12">
             <div class="chart-container" style="position: relative; margin:0 auto; height:40vh; width:70vw">  
               <canvas id="cpuStressTestChart"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div class="loadingDivGPU">
+              <div id="loadingBarGPUID" class="loadingBarGPU">0%</div>
             </div>
           </div>
         </div>
@@ -214,8 +221,7 @@
           <input required type="number" name="TestValue" class="form-control" id="TestValue"
             placeholder="This value will be used with the operator to generate the constraint">
         </div>
-        <p>**Application must be left on the home page for reports to be generated</p>
-        <p>**Example Constraint: load % > 80. Reports created when this is true</p>
+        <p>*Example Constraint: load % > 80. Reports created when this is true</p>
         <button id="AddContraint" type="button" class="btn btn-primary">Add Constraint</button>
       </form>
     </div>
